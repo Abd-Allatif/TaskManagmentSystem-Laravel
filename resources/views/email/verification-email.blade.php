@@ -5,9 +5,7 @@
         <h1 class="user">Hello {{ $user->name }}</h1>
         <h3 class="text">Please click the url below to verify your email address</h3>
 
-        @component('mail::button', ['url' => $verificationUrl])
-            Verify Email Address
-        @endcomponent
+        <a class=".login-button" href={{$url}}>Verify Email Address</a>
 
         <h4 class="text">Thank You!</h4>
         <h6 class="text">{{env("APP_NAME")}} Team</h6>
