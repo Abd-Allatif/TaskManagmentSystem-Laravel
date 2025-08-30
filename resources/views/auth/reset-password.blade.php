@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <form class="form" method="POST" action="{{ route('password.store') }}">
+        <form class="form" method="POST" action="{{ route('password.resetPass') }}">
             @csrf
 
             <!-- Password Reset Token -->
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+            <input type="hidden" name="token" value="{{ $token }}">
 
             <!-- Email Address -->
             <div>
-                <input placeholder="E-mail" id="email" name="email" type="email" value={{ $request->email }} class="input" required="" />
+                <input placeholder="E-mail" id="email" name="email" type="email"  class="input" required="" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
-            </div>
+            </div>  
 
             <!-- Password -->
             <div class="mt-4">

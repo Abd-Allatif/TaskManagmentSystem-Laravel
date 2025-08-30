@@ -7,7 +7,6 @@ use App\Jobs\VerificationEmailSendJob;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
 class VerificationController extends Controller
@@ -29,7 +28,7 @@ class VerificationController extends Controller
 
         $url = URL::temporarySignedRoute(
             'verification.verify',
-            now()->addMinutes(60),
+             Carbon::now()->addMinutes(60),
             ['id' => $user->id]
         );
 
@@ -46,7 +45,7 @@ class VerificationController extends Controller
             $user->email_verified_at = Carbon::now();
             $user->save();
         }
-
+        
         Auth::login($user);
 
         return redirect()->route('dashboard')->with('status', 'Email verified!');

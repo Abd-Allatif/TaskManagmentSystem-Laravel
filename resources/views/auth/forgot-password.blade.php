@@ -7,7 +7,7 @@
         </div>
 
         <!-- Session Status --> 
-        <x-auth-session-status class="session-status" :status="session('status')"/>
+        <h5 class="session-status">{{session('status')}}</h5>
 
         <form class="form" method="POST" action="{{ route('password.email') }}">
             @csrf
@@ -15,7 +15,7 @@
             <!-- Email Address -->
             <div>
                 <input placeholder="E-mail" id="email" name="email" type="email" class="input" required="" />
-                <x-input-erro class="text" :messages="$errors->get('email')" />
+                <h5 class="text">{{session('status')}}</h5>
             </div>
 
             <input value="Email Password Reset Link" type="submit" class="login-button" />
