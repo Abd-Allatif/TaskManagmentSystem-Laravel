@@ -39,6 +39,11 @@ class Task extends Model
         return $this->belongsTo(Task::class,'parentTask_id');
     }
 
+    // Retrieving the Parent tasks
+    function scopeParent($query){
+        return $query->whereNull('parentTask_id');
+    }
+
     // Gathering and getting all sub tasks attributes
     public function subTask(): HasMany{
         return $this->hasMany(Task::class,'parentTask_id');
@@ -47,7 +52,7 @@ class Task extends Model
     // Accessing user table
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'user_task_pivots');
+        return $this->belongsToMany(User::class,'user_task_pivots','task_id','user_id');
     }
 
     // Accessing categories table

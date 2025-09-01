@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +15,12 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->dateTime('create_date');
-            $table->date('deadline');
-            $table->string('status');
-            $table->boolean('end_flag');
-            $table->foreignId('parentTask_id')->constrained('tasks','id')->onDelete('cascade');
+            $table->text('description')->nullable();
+            $table->dateTime('create_date')->default(Carbon::now());
+            $table->date('deadline')->default(Carbon::now()->addDays(7));
+            $table->string('status')->default('pending');
+            $table->boolean('end_flag')->default(false);
+            $table->foreignId('parentTask_id')->nullable()->constrained('tasks','id')->onDelete('cascade');
             $table->timestamps();
         });
     }
