@@ -16,20 +16,32 @@ class TaskRepository
     public function getAllTasks($userId)
     {
         // Getting the Parent Task with Categories and thier Sub Tasks Using Scope
-        $tasks = Task::parent()->with([
-            'categories' , 'subTask'
-        ]
+        $tasks = Task::parent()->with(
+            [
+                'categories',
+                'subTask'
+            ]
         )->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
-        })->orderBy('status','desc')
-        ->get();
+        })->orderBy('status', 'desc')
+            ->get();
 
         return $tasks;
     }
 
-    public function getTask($taskId){
-        $task = Task::parent()->with(['categories','subtask'])->where('id',$taskId)->get();
+    public function getTask($taskId)
+    {
+        $task = Task::parent()->with(['categories', 'subtask'])->where('id', $taskId)->get();
 
         return $task;
+    }
+
+    public function searchTask($searchQuery,$userId)
+    {
+        $searchResult = Task::parent()->where('title', 'like', '%'.$searchQuery.'%')->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->get();
+
+        return $searchResult;
     }
 }

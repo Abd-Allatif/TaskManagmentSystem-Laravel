@@ -7,35 +7,14 @@
             <h1 id="bartitle">Tasks</h1>
         </div>
 
-        <form class="form" method="POST" action="{{ route('searchTask', $userId) }}">
-            @csrf
-            
-            <button>
-                <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
-                    aria-labelledby="search">
-                    <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
-                        stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-            </button>
+        <div id="BackButton">
+            <button class="backButton" onclick="window.location.href='{{ route('getAllTasks', $userId) }}'">Back</button>
+        </div>
 
-            <input class="input" name="searchQuery" id="searchQuery" placeholder="Search" required=""
-                type="text">
+        @foreach ($searchResult as $task)
+            <div class="container">
+                <ul class="taskList">
 
-            <button class="reset" type="reset">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-
-            <div class="submitContainer">
-                <input type="submit" class="searchButton" value="Search">
-            </div>
-        </form>
-
-        <div class="container">
-            <ul class="taskList">
-                @foreach ($tasks as $task)
                     <li class="tasks">
                         <h3 id="task_title">{{ $task->title }}</h3>
 
@@ -81,9 +60,9 @@
                                     Details</button>
                             </div>
                     </li>
-                @endforeach
-            </ul>
-        </div>
+                </ul>
+            </div>
+        @endforeach
     </head>
 
     <style>
@@ -115,106 +94,48 @@
             text-align: center;
         }
 
-        /* From Uiverse.io by satyamchaudharydev */
-        /* From uiverse.io by @satyamchaudharydev */
-        /* removing default style of button */
-
-        .form button {
-            border: none;
-            background: none;
-            color: #8b8ba7;
+        #bartitle {
+            align-self: center;
+            color: #0099ff;
         }
 
-        /* styling of whole input container */
-        .form {
-            --timing: 0.3s;
-            --width-of-input: 200px;
-            --height-of-input: 40px;
-            --border-height: 2px;
-            --input-bg: #f0f0f0;
-            --border-color: #0099ff;
-            --border-radius: 30px;
-            --after-border-radius: 1px;
-            position: relative;
-            width: var(--width-of-input);
-            height: var(--height-of-input);
-            display: flex;
-            align-items: center;
-            padding-inline: 0.8em;
-            border-radius: var(--border-radius);
-            transition: border-radius 0.5s ease;
-            background: var(--input-bg, #fff);
+        #BackButton {
+            align-self: flex-start;
+            justify-self: flex-start;
+
+            margin-left: 20px;
+        }
+
+        .backButton {
+            display: block;
+            width: 100px;
+            font-weight: bold;
 
             align-self: center;
             justify-self: center;
 
-            margin-top: 25px;
-        }
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
 
-        /* styling of Input */
-        .input {
-            font-size: 0.9rem;
-            background-color: transparent;
-            width: 150px;
-            height: 100%;
-            padding-inline: 0.5em;
-            padding-block: 0.7em;
+            margin-top: 20px;
+
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
             border: none;
+            transition: all 0.2s ease-in-out;
         }
 
-        /* styling of animated border */
-        .form:before {
-            content: "";
-            position: absolute;
-            background: var(--border-color);
-            transform: scaleX(0);
-            transform-origin: center;
-            width: 100%;
-            height: var(--border-height);
-            left: 0;
-            bottom: 0;
-            border-radius: 1px;
-            transition: transform var(--timing) ease;
+        .backButton:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
         }
 
-        /* Hover on Input */
-        .form:focus-within {
-            border-radius: var(--after-border-radius);
-        }
-
-        input:focus {
-            outline: none;
-        }
-
-        /* here is code of animated border */
-        .form:focus-within:before {
-            transform: scale(1);
-        }
-
-        /* styling of close button */
-        /* == you can click the close button to remove text == */
-        .reset {
-            border: none;
-            background: none;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        /* close button shown when typing */
-        input:not(:placeholder-shown)~.reset {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* sizing svg icons */
-        .form svg {
-            width: 17px;
-            margin-top: 3px;
-        }
-
-        #bartitle {
-            align-self: center;
-            color: #0099ff;
+        .backButton:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
         }
 
         .taskList {
@@ -235,7 +156,6 @@
             padding: 25px 35px;
             border: 5px solid rgb(255, 255, 255);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
-            margin: 20px;
 
             cursor: pointer;
         }
@@ -351,9 +271,10 @@
         }
 
 
-        .submitContainer{
+        .submitContainer {
             margin-left: 20px;
         }
+
         .searchButton {
             display: block;
             width: 70px;
@@ -374,7 +295,7 @@
             border: none;
             transition: all 0.2s ease-in-out;
         }
-        
+
         .searchButton:hover {
             transform: scale(1.03);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;

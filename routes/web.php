@@ -20,5 +20,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/tasks/{userid}',[TaskController::class,'getTasks'])->name('getAllTasks');
 Route::get('/tasks/about_task/{taskid}',[TaskController::class,'showClickedTask'])->name('getClickedTask');
+Route::post('/tasks/searchTask/{userId}',[TaskController::class,'searchTask'])->name('searchTask');
 
 require __DIR__.'/auth.php';
