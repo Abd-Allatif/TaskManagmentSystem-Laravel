@@ -21,9 +21,7 @@ class TaskRepository
                 'categories',
                 'subTask'
             ]
-        )->whereHas('users', function ($query) use ($userId) {
-            $query->where('users.id', $userId);
-        })->orderBy('status', 'desc')
+        )->forUser($userId)->orderBy('status', 'desc')
             ->get();
 
         return $tasks;
@@ -36,12 +34,12 @@ class TaskRepository
         return $task;
     }
 
-    public function searchTask($searchQuery,$userId)
+    public function searchTask($searchQuery, $userId)
     {
-        $searchResult = Task::parent()->where('title', 'like', '%'.$searchQuery.'%')->whereHas('users', function ($query) use ($userId) {
-            $query->where('users.id', $userId);
-        })->get();
+        $searchResult = Task::parent()->where('title', 'like', '%' . $searchQuery . '%')->forUser($userId)->orderBy('status', 'desc')->get();
 
         return $searchResult;
     }
+
+    public function createTask(array $data, $userId) {}
 }

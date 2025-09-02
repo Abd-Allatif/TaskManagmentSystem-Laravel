@@ -55,6 +55,12 @@ class Task extends Model
         return $this->belongsToMany(User::class,'user_task_pivots','task_id','user_id');
     }
 
+    public function scopeForuser($query,$userId){
+        $query->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        });
+    }
+
     // Accessing categories table
     public function categories(): BelongsToMany
     {

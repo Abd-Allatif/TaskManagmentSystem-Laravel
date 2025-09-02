@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Managment;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\TaskRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -22,7 +23,7 @@ class TaskController extends Controller
         $tasks = $this->taskRepository->getAllTasks($userId);
 
         // return response()->json($tasks);
-        return view('pages.view-tasks', ['tasks' => $tasks, 'userId' => $userId]);
+        return view('pages.Tasks.view-tasks', ['tasks' => $tasks, 'userId' => $userId]);
     }
 
     public function showClickedTask($taskId)
@@ -30,18 +31,25 @@ class TaskController extends Controller
         $task = $this->taskRepository->getTask($taskId);
 
         // return response()->json($task);
-        return view('pages.view-clickedTask', ['task' => $task]);
+        return view('pages.Tasks.view-clickedTask', ['task' => $task]);
     }
 
     public function searchTask(Request $request, $userId)
     {
         $query = $request->validate([
-            'searchQuery' => ["required","string"],
+            'searchQuery' => ["required", "string"],
         ]);
 
         $searchResult = $this->taskRepository->searchTask($query['searchQuery'], $userId);
 
         // return response()->json($searchResult);
-        return view('pages.taskSearch',['searchResult' => $searchResult,'userId' => $userId]);
+        return view('pages.Tasks.taskSearch', ['searchResult' => $searchResult, 'userId' => $userId]);
+    }
+
+    public function ShowcreateTask($userId)
+    {
+        $deadLine = Carbon::now()->addDays(10);
+        
+        return view('pages.Tasks.createTask', ['userId' => $userId,'deadLine' => $deadLine->toDateString()]);
     }
 }

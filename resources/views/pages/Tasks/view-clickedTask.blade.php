@@ -24,17 +24,17 @@
                 <div class="status_endflag_container">
                     @if ($taskContent->status == 'pending')
                         <div class="statusContainer">
-                            <h4 id="task_status">{{ $taskContent->status }}</h4>
+                            <h4 id="task_status">Pending</h4>
                             <div class="orange_dot"></div>
                         </div>
                     @elseif ($taskContent->status == 'in_progress')
                         <div class="statusContainer">
-                            <h4 id="task_status">{{ $taskContent->status }}</h4>
+                            <h4 id="task_status">In Progress</h4>
                             <div class="green_dot"></div>
                         </div>
                     @else
                         <div class="statusContainer">
-                            <h4 id="task_status">{{ $taskContent->status }}</h4>
+                            <h4 id="task_status">Completed</h4>
                             <div class="red_dot"></div>
                         </div>
                     @endif

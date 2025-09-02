@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->dateTime('create_date')->default(Carbon::now());
-            $table->date('deadline')->default(Carbon::now()->addDays(7));
+            $table->dateTime('create_date')->default(Carbon::now()->toDateTimeString());
+            $table->date('deadline')->default(Carbon::now()->addDays(7)->toDateString());
             $table->string('status')->default('pending');
             $table->boolean('end_flag')->default(false);
             $table->foreignId('parentTask_id')->nullable()->constrained('tasks','id')->onDelete('cascade');

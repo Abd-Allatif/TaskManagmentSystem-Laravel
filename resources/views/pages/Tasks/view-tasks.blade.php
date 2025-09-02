@@ -4,12 +4,18 @@
 
     <head>
         <div class="AppBar">
-            <h1 id="bartitle">Tasks</h1>
+            <div class="barTitleContainer">
+                <h1 id="bartitle">Tasks</h1>
+            </div>
+
+            <div id="actions">
+                <a id="CreateTask" href="{{route('createTask',$userId)}}">Create Task</a>
+            </div>
         </div>
 
         <form class="form" method="POST" action="{{ route('searchTask', $userId) }}">
             @csrf
-            
+
             <button>
                 <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
                     aria-labelledby="search">
@@ -18,8 +24,7 @@
                 </svg>
             </button>
 
-            <input class="input" name="searchQuery" id="searchQuery" placeholder="Search" required=""
-                type="text">
+            <input class="input" name="searchQuery" id="searchQuery" placeholder="Search" required="" type="text">
 
             <button class="reset" type="reset">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -54,17 +59,17 @@
                             <div class="status">
                                 @if ($task->status == 'pending')
                                     <div class="statusContainer">
-                                        <h4 id="task_status">{{ $task->status }}</h4>
+                                        <h4 id="task_status">Pending</h4>
                                         <div class="orange_dot"></div>
                                     </div>
                                 @elseif ($task->status == 'in_progress')
                                     <div class="statusContainer">
-                                        <h4 id="task_status">{{ $task->status }}</h4>
+                                        <h4 id="task_status">In Progress</h4>
                                         <div class="green_dot"></div>
                                     </div>
                                 @else
                                     <div class="statusContainer">
-                                        <h4 id="task_status">{{ $task->status }}</h4>
+                                        <h4 id="task_status">Completed</h4>
                                         <div class="red_dot"></div>
                                     </div>
                                 @endif
@@ -113,6 +118,29 @@
 
             margin: 0;
             text-align: center;
+
+            .barTitleContainer {
+                align-self: center;
+                justify-self: center;
+            }
+
+            #bartitle {
+                align-self: center;
+                color: #0099ff;
+                justify-self: center;
+            }
+
+            #actions {
+                position: absolute;
+                left: 89%;
+                align-self: center;
+                
+                #CreateTask {
+                    text-decoration: none;
+                    color: #0099ff;
+                    font-weight: bold;
+                }
+            }
         }
 
         /* From Uiverse.io by satyamchaudharydev */
@@ -124,6 +152,7 @@
             background: none;
             color: #8b8ba7;
         }
+
 
         /* styling of whole input container */
         .form {
@@ -210,11 +239,6 @@
         .form svg {
             width: 17px;
             margin-top: 3px;
-        }
-
-        #bartitle {
-            align-self: center;
-            color: #0099ff;
         }
 
         .taskList {
@@ -351,9 +375,10 @@
         }
 
 
-        .submitContainer{
+        .submitContainer {
             margin-left: 20px;
         }
+
         .searchButton {
             display: block;
             width: 70px;
@@ -374,7 +399,7 @@
             border: none;
             transition: all 0.2s ease-in-out;
         }
-        
+
         .searchButton:hover {
             transform: scale(1.03);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
