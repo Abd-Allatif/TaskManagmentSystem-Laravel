@@ -5,7 +5,7 @@
     <div class="container">
         <x-auth-session-status class="text" :status="session('status')" />
 
-        <form class="form" method="POST" action="">
+        <form class="form" method="POST" action="{{ route('createNewTask', $userId) }}">
             @csrf
 
             <div>
@@ -14,12 +14,15 @@
             </div>
 
             <div>
-                <textarea name="description" placeholder="Description" id="description" cols="7" rows="7" class="input" required=""></textarea>
+                <textarea name="description" placeholder="Description" id="description" cols="7" rows="7" class="input"
+                    required=""></textarea>
                 <x-input-error class="text" :messages="$errors->get('email')" />
             </div>
 
             <div>
-                <input placeholder="Dead Line" id="Deadline" name="deadline" type="date" value="{{$deadLine}}" class="input" required="" />
+                <label class="deadlineLabel" for="deadline">Dead Line</label>
+                <input placeholder="Dead Line" id="Deadline" name="deadline" type="date" value="{{ $deadLine }}"
+                    class="input" required="" />
                 <x-input-error class="text" :messages="$errors->get('email')" />
             </div>
 
@@ -31,11 +34,33 @@
             </div>
 
             <div>
+                <div class="dropdown">
+                    <input hidden="" class="sr-only" name="state-dropdown" id="state-dropdown" type="checkbox" />
+                    <label aria-label="dropdown scrollbar" for="state-dropdown" class="trigger"></label>
+
+                    <ul class="list webkit-scrollbar" role="list" dir="auto">
+                        @foreach ($categories as $category)
+                            <li class="listitem" role="listitem">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+                                <label style="color:{{ $category->color }};"
+                                    for="category-{{ $category->id }}">{{ $category->name }}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <input placeholder="Sub Task Title (Optional)" id="subTask" name="subtitle" type="text" class="input" />
+                <x-input-error class="text" :messages="$errors->get('email')" />
+            </div>
+
+            <div>
                 <textarea name="subTask" placeholder="Sub Task (Optional)" id="subTask" cols="7" rows="7" class="input"></textarea>
                 <x-input-error class="text" :messages="$errors->get('email')" />
             </div>
 
-            <input value="Create" type="submit" class="CreateTask" />
+            <input type="submit" class="CreateTask" />
         </form>
     </div>
 
@@ -68,6 +93,166 @@
             font-size: 30px;
             color: rgb(16, 137, 211);
         }
+
+        /* From Uiverse.io by ilkhoeri */
+        .dropdown {
+            border: 1px solid #c1c2c5;
+            border-radius: 12px;
+            transition: all 300ms;
+            display: flex;
+            flex-direction: column;
+            min-height: 58px;
+            background-color: white;
+            color: #0099ff;
+
+            overflow: hidden;
+            position: relative;
+            inset-inline: auto;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .dropdown input:where(:checked)~.list {
+            opacity: 1;
+            transform: translateY(-3rem) scale(1);
+            transition: all 500ms ease;
+            margin-top: 32px;
+            padding-top: 4px;
+            margin-bottom: -32px;
+        }
+
+        .dropdown input:where(:not(:checked))~.list {
+            opacity: 0;
+            transform: translateY(3rem);
+            margin-top: -100%;
+            user-select: none;
+            height: 0px;
+            max-height: 0px;
+            min-height: 0px;
+            pointer-events: none;
+            transition: all 500ms ease-out;
+        }
+
+        .trigger {
+            cursor: pointer;
+            list-style: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            font-weight: 600;
+            color: inherit;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-flow: row;
+            gap: 1rem;
+            padding: 1rem;
+            height: max-content;
+            position: relative;
+            z-index: 99;
+            border-radius: inherit;
+            background-color: white;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .dropdown input:where(:checked)+.trigger {
+            margin-bottom: 1rem;
+        }
+
+        .dropdown input:where(:checked)+.trigger:before {
+            rotate: 90deg;
+            transition-delay: 0ms;
+        }
+
+        .dropdown input:where(:checked)+.trigger::after {
+            content: "Close";
+        }
+
+        .trigger:before,
+        .trigger::after {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .trigger:before {
+            content: "›";
+            rotate: -90deg;
+            width: 17px;
+            height: 17px;
+            color: #262626;
+            border-radius: 2px;
+            font-size: 26px;
+            transition: all 350ms ease;
+            transition-delay: 85ms;
+        }
+
+        .trigger::after {
+            content: "Categories";
+        }
+
+        .list {
+            height: 100%;
+            max-height: 20rem;
+            width: calc(100% - calc(var(--w-scrollbar) / 2));
+            display: grid;
+            grid-auto-flow: row;
+            overflow: hidden auto;
+            gap: 1rem;
+            padding: 0 1rem;
+            margin-right: -8px;
+            --w-scrollbar: 8px;
+        }
+
+        .listitem {
+            height: 100%;
+            width: calc(100% + calc(calc(var(--w-scrollbar) / 2) + var(--w-scrollbar)));
+            list-style: none;
+        }
+
+        .article {
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: justify;
+            width: 75%;
+            border: 1px solid #c1c2c5;
+            display: inline-block;
+            background-color: white;
+        }
+
+        .webkit-scrollbar::-webkit-scrollbar {
+            width: var(--w-scrollbar);
+            height: var(--w-scrollbar);
+            border-radius: 9999px;
+        }
+
+        .webkit-scrollbar::-webkit-scrollbar-track {
+            background: #0000;
+        }
+
+        .webkit-scrollbar::-webkit-scrollbar-thumb {
+            background: #0000;
+            border-radius: 9999px;
+        }
+
+        .webkit-scrollbar:hover::-webkit-scrollbar-thumb {
+            background: #c1c2c5;
+        }
+
 
         #description {
             resize: vertical;
@@ -144,11 +329,16 @@
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
         }
 
-        .checkBox{
+        .checkBox {
             margin-top: 17px;
             margin-left: 7px;
 
-            color:#0099ff;
+            color: #0099ff;
+        }
+
+        .deadlineLabel {
+            margin-left: 13px;
+            color: #0099ff;
         }
     </style>
 @endsection

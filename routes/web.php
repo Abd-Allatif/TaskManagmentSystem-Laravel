@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Managment\CategoryController;
 use App\Http\Controllers\Managment\TaskController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,8 @@ Route::get('/tasks/{userid}',[TaskController::class,'getTasks'])->name('getAllTa
 Route::get('/tasks/about_task/{taskid}',[TaskController::class,'showClickedTask'])->name('getClickedTask');
 Route::post('/tasks/searchTask/{userId}',[TaskController::class,'searchTask'])->name('searchTask');
 Route::get('/tasks/createTask/{userId}',[TaskController::class,'ShowcreateTask'])->name('createTask');
+Route::post('/tasks/create_new_task/{userId}',[TaskController::class,'createTask'])->name('createNewTask');
+
+route::get('/category/{categoryId}/user/{userId}',[CategoryController::class,'getClickedCategory'])->name('getClickedCategory');
 
 require __DIR__.'/auth.php';

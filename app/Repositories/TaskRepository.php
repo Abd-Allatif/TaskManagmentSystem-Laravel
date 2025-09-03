@@ -4,8 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 //use Your Model
 
 /**
@@ -41,5 +44,37 @@ class TaskRepository
         return $searchResult;
     }
 
-    public function createTask(array $data, $userId) {}
+    public function createTask($data, $userId): void
+    {   
+        DB::transaction(function () use ($data, $userId) {
+            $task = Task::create([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'create_date' => Carbon::now(),
+                'deadline' => $data['deadline'],
+                'status' => $data['status'],
+                'end_flag' => false,
+            ]);
+
+            if (!empty($data['categories'])) {
+                $task->categories()->attach($data['categories']);
+            }
+
+            $user = User::find($userId);
+
+            $task->users()->attach($user->id);
+
+            if (!empty($data['subtitle'])) {
+                $subTask = $task = Task::create([
+                    'title' => $data['subtitle'],
+                    'description' => $data['subTask'],
+                    'create_date' => Carbon::now(),
+                    'deadline' => $data['deadline'],
+                    'status' => $data['status'],
+                    'end_flag' => false,
+                    'parentTask_id' => $task->id
+                ]);
+            }
+        });
+    }
 }

@@ -16,8 +16,24 @@ class CategoryRepository
 {
  
     // Getting All Tasks for the user
-    public function getTasks($user)
+    public function getAllCategories()
     {
-       
+       $categories = Category::all();
+
+       return $categories;
     } 
+
+    public function getCategory($categoryId,$userId) {
+        $category = Category::with(['tasks' => function ($query) use ($userId,$categoryId){
+            return $query->parent()->forUser($userId)->whereHas('categories' , function ($query) use ($categoryId) {
+                return $query->where('category_id','=',$categoryId);
+            })->orderBy('status','desc');
+        }])->where('id','=',$categoryId)->get();
+
+        return $category;
+    }
+
+    public function getSingleCategory(array $categoryId){
+        return  Category::whereIn('id', $categoryId)->get();
+    }
 }

@@ -22,4 +22,10 @@ class Category extends Model
     {
         return $this->belongsToMany(Task::class, 'category_task_pivots');
     }
+
+    public function scopeForTasks($query,$userId){
+        return $query->whereHas('tasks',function ($query) use ($userId){
+            return $query->parent()->forUser($userId);
+        });
+    }
 }

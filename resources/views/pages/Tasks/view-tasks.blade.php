@@ -9,8 +9,23 @@
             </div>
 
             <div id="actions">
-                <a id="CreateTask" href="{{route('createTask',$userId)}}">Create Task</a>
+                <a id="CreateTask" href="{{ route('createTask', $userId) }}">Create Task</a>
             </div>
+        </div>
+
+        <div class="Categories">
+            <ul class="categoryList">
+                <div>
+                    <h3 id="CategoryH4">Categories</h3>
+                    <div class="categoriesList">
+                        @foreach ($categories as $category)
+                            <button class="categoryBtn" style="color: {{ $category->color }}"
+                                onClick="window.location.href='{{ route('getClickedCategory', [$category->id, $userId]) }}'">
+                                {{ $category->name }}</button>
+                        @endforeach
+                    </div>
+                </div>
+            </ul>
         </div>
 
         <form class="form" method="POST" action="{{ route('searchTask', $userId) }}">
@@ -134,7 +149,7 @@
                 position: absolute;
                 left: 89%;
                 align-self: center;
-                
+
                 #CreateTask {
                     text-decoration: none;
                     color: #0099ff;
@@ -142,6 +157,52 @@
                 }
             }
         }
+
+        .Categories {
+            position: absolute;
+
+            background: #f8f9fd;
+            background: linear-gradient(0deg,
+                    rgb(255, 255, 255) 0%,
+                    rgb(244, 247, 251) 100%);
+            border-radius: 40px;
+            padding: 25px 35px;
+            border: 5px solid rgb(255, 255, 255);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+            margin: 20px;
+        }
+
+        .categoriesList {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            direction: rtl;
+            width: 100px;
+            height: 250px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        #CategoryH4 {
+            color: #0099ff;
+            padding-top: 15px;
+            padding-left: 15px;
+        }
+
+        .categoryBtn {
+            margin-left: 20px;
+            margin-top: 20px;
+            padding: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .categoryBtn:hover {
+            background: #c0e6ff;
+        }
+
 
         /* From Uiverse.io by satyamchaudharydev */
         /* From uiverse.io by @satyamchaudharydev */
@@ -261,7 +322,6 @@
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
             margin: 20px;
 
-            cursor: pointer;
         }
 
         #task_title {

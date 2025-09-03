@@ -19,7 +19,9 @@
                     @endforeach
                 </div>
 
-                <div id="taskDesc">{{ $taskContent->description }}</div>
+                <div class="descriptionContainer">
+                    <p id="taskDesc">{{ $taskContent->description }}</p>
+                </div>
 
                 <div class="status_endflag_container">
                     @if ($taskContent->status == 'pending')
@@ -122,11 +124,19 @@
             color: #0099ff;
         }
 
+        .descriptionContainer{
+           
+        }
+
         #taskDesc {
-            align-self: center;
-            justify-self: center;
+            align-self: flex-start;
+            justify-self: flex-start;
             color: rgb(177, 177, 177);
             margin-top: 10px;
+
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .status_endflag_container {

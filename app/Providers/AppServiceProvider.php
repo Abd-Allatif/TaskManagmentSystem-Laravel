@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Mail\VerficationMail;
+use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\ServiceProvider;
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(TaskRepository::class,function($app){
             return new TaskRepository;
+        });
+
+        $this->app->bind(CategoryRepository::class,function($app){
+            return new CategoryRepository;
         });
     }
 

@@ -17,6 +17,7 @@
         "symfony/http-client": "^7.3"
     },
     "require-dev": {
+        "beyondcode/laravel-er-diagram-generator": "^5.0",
         "fakerphp/faker": "^1.23",
         "jason-guru/laravel-make-repository": "^0.0.3",
         "laravel/breeze": "^2.3",

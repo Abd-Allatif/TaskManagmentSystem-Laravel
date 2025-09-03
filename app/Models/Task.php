@@ -18,7 +18,7 @@ class Task extends Model
         'title',
         'description',
         'create_date',
-        'dead_line',
+        'deadline',
         'status',
         'end_flag',
         'parentTask_id'
@@ -28,7 +28,7 @@ class Task extends Model
     // Laravel will auto convert these fields into php types
     protected $casts = [
         'create_date' => 'datetime',
-        'dead_line' => 'date',
+        'deadline' => 'date',
         'end_flag' => 'boolean'
     ];
 
@@ -56,8 +56,8 @@ class Task extends Model
     }
 
     public function scopeForuser($query,$userId){
-        $query->whereHas('users', function ($query) use ($userId) {
-            $query->where('users.id', $userId);
+        return $query->whereHas('users', function ($query) use ($userId) {
+            return $query->where('users.id', $userId);
         });
     }
 
