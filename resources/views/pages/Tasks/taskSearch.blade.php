@@ -56,7 +56,7 @@
 
                             <div id="aboutTask">
                                 <button class="button"
-                                    onclick="window.location.href='{{ route('getClickedTask', $task->id) }}'">View
+                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id,$userId]) }}'">View
                                     Details</button>
                             </div>
                     </li>

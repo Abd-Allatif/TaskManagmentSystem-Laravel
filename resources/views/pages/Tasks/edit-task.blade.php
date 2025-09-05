@@ -5,31 +5,31 @@
     <div class="container">
         <x-auth-session-status class="text" :status="session('status')" />
 
-        <form class="form" method="POST" action="{{ route('createNewTask', $userId) }}">
+        <form class="form" method="POST" action="{{ route('editTask', [$task->id, $userId]) }}">
             @csrf
+            @method('PUT')
 
             <div>
-                <input placeholder="Title" id="title" name="title" type="text" class="input" required="" />
-                <x-input-error class="text" :messages="$errors->get('email')" />
+                <input placeholder="Title" id="title" name="title" type="text" value="{{ $task->title }}"
+                    class="input" required="" />
             </div>
 
             <div>
                 <textarea name="description" placeholder="Description" id="description" cols="7" rows="7" class="input"
-                    required=""></textarea>
-                <x-input-error class="text" :messages="$errors->get('email')" />
+                    required=""> {{ $task->description }}</textarea>
             </div>
 
             <div>
                 <label class="deadlineLabel" for="deadline">Dead Line</label>
-                <input placeholder="Dead Line" id="Deadline" name="deadline" type="date" value="{{ $deadLine }}"
+                <input placeholder="Dead Line" id="Deadline" name="deadline" type="date" value="{{ $task->deadline }}"
                     class="input" required="" />
-                <x-input-error class="text" :messages="$errors->get('email')" />
             </div>
 
             <div class="checkBox">
-                <input type="radio" name="status" value="pending" checked>
+                <input type="radio" name="status" value="pending" {{ $task->status == 'pending' ? 'checked' : '' }}>
                 <label for="status">Pending</label>
-                <input id="in_progress" type="radio" name="status" value="in_progress">
+                <input id="in_progress" type="radio" name="status" value="in_progress"
+                    {{ $task->status == 'in_progress' ? 'checked' : '' }}>
                 <label for="status">In Progress</label>
             </div>
 
@@ -41,7 +41,8 @@
                     <ul class="list webkit-scrollbar" role="list" dir="auto">
                         @foreach ($categories as $category)
                             <li class="listitem" role="listitem">
-                                <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                    {{ in_array($category->id, $task->categories->pluck('id')->toArray()) ? 'checked' : '' }}>
                                 <label style="color:{{ $category->color }};"
                                     for="category-{{ $category->id }}">{{ $category->name }}</label>
                             </li>
@@ -49,7 +50,17 @@
                     </ul>
                 </div>
             </div>
+            <?php  //dd($task->subtask); ?>
             
+            <div>
+                <input placeholder="Sub Task Title (Optional)" id="subTask" value="{{ !isset($task->subtask[0]->title) ? "" : $task->subtask[0]->title }}"
+                    name="subtitle" type="text" class="input" />
+            </div>
+
+            <div>
+                <textarea name="subTask" placeholder="Sub Task (Optional)" id="subTask" cols="7" rows="7" class="input"> {{ !isset($task->subtask[0]->description) ? "" : $task->subtask[0]->description }}</textarea>
+            </div>
+
             <input type="submit" class="CreateTask" />
         </form>
     </div>

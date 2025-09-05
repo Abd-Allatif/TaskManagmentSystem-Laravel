@@ -8,16 +8,16 @@
         </div>
 
         <div class="container">
-            <h2 id="CategoryName">{{ $category[0]->name }}</h2>
+            <h2 id="CategoryName">{{ $category->name }}</h2>
 
             <h3 id="Color">Color:</h3>
-            <div class="ColorBox" style="background: {{ $category[0]->color }}"></div>
+            <div class="ColorBox" style="background: {{ $category->color }}"></div>
         </div>
     </head>
 
     <div>
         <ul class="taskList">
-            @foreach ($category[0]->tasks as $task)
+            @foreach ($category->tasks as $task)
                 <li class="tasks">
                     <h3 id="task_title">{{ $task->title }}</h3>
 
@@ -59,7 +59,7 @@
 
                         <div id="aboutTask">
                             <button class="button"
-                                onclick="window.location.href='{{ route('getClickedTask', $task->id) }}'">View
+                                onclick="window.location.href='{{ route('getClickedTask', [$task->id,$userId]) }}'">View
                                 Details</button>
                         </div>
                 </li>

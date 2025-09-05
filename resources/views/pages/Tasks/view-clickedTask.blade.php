@@ -4,65 +4,77 @@
 
     <head>
         <div class="AppBar">
-            <h1 id="bartitle">Tasks</h1>
+            <div class="barTitleContainer">
+                <h1 id="bartitle">Tasks</h1>
+            </div>
+
+            <div id="actions">
+                <a id="CreateTask" href="{{ route('showEditPage', [$task->id, $userId]) }}">Edit Task</a>
+            </div>
         </div>
 
         <div class="container">
-            @foreach ($task as $taskContent)
-                <div id="taskTitle">{{ $taskContent->title }}</div>
+            <div id="taskTitle">{{ $task->title }}</div>
 
-                <div style="display:flex;flex-direction:row;">
-                    @foreach ($taskContent->categories as $categories)
-                        <div
-                            style="color:{{ $categories->color }};padding-left:10px;;padding-top:10px;display:flex;flex-direction:row;">
-                            {{ $categories->name }}</div>
-                    @endforeach
-                </div>
+            <div style="display:flex;flex-direction:row;">
+                @foreach ($task->categories as $categories)
+                    <div
+                        style="color:{{ $categories->color }};padding-left:10px;;padding-top:10px;display:flex;flex-direction:row;">
+                        {{ $categories->name }}</div>
+                @endforeach
+            </div>
 
-                <div class="descriptionContainer">
-                    <p id="taskDesc">{{ $taskContent->description }}</p>
-                </div>
+            <div class="descriptionContainer">
+                <p id="taskDesc">{{ $task->description }}</p>
+            </div>
 
-                <div class="status_endflag_container">
-                    @if ($taskContent->status == 'pending')
-                        <div class="statusContainer">
-                            <h4 id="task_status">Pending</h4>
-                            <div class="orange_dot"></div>
-                        </div>
-                    @elseif ($taskContent->status == 'in_progress')
-                        <div class="statusContainer">
-                            <h4 id="task_status">In Progress</h4>
-                            <div class="green_dot"></div>
-                        </div>
-                    @else
-                        <div class="statusContainer">
-                            <h4 id="task_status">Completed</h4>
-                            <div class="red_dot"></div>
-                        </div>
+            <div class="status_endflag_container">
+                @if ($task->status == 'pending')
+                    <div class="statusContainer">
+                        <h4 id="task_status">Pending</h4>
+                        <div class="orange_dot"></div>
+                    </div>
+                @elseif ($task->status == 'in_progress')
+                    <div class="statusContainer">
+                        <h4 id="task_status">In Progress</h4>
+                        <div class="green_dot"></div>
+                    </div>
+                @else
+                    <div class="statusContainer">
+                        <h4 id="task_status">Completed</h4>
+                        <div class="red_dot"></div>
+                    </div>
+                @endif
+
+                <input id="endflag" name="endflag" type="checkbox">
+                <label id="endflaglabel" name="endflag">End Task</label>
+            </div>
+
+            <!-- Adding a Sub Task Creation to View Clicked Tasks -->
+            <div class="createSubTask">
+                <input placeholder="Sub Task Title (Optional)" id="subTask" name="subtitle" type="text"
+                    class="input" />
+                <textarea name="subTask" placeholder="Sub Task (Optional)" id="subTask" cols="7" rows="7" class="input"></textarea>
+
+            </div>
+
+            <div>
+                @if (count($task->subTask) != 0)
+                    <div class="subTask">Sub Tasks</div>
+                @endif
+
+                @foreach ($task->subtask as $sub)
+                    @if ($sub->id)
+                        <div id="subTaskTitle">{{ $sub->title }}</div>
+                        <div id="taskDesc">{{ $sub->description }}</div>
                     @endif
+                @endforeach
+            </div>
 
-                    <input id="endflag" name="endflag" type="checkbox">
-                    <label id="endflaglabel" name="endflag">End Task</label>
-                </div>
-
-                <div>
-                    @if (count($taskContent->subTask) != 0)
-                        <div class="subTask">Sub Tasks</div>
-                    @endif
-
-                    @foreach ($taskContent->subtask as $sub)
-                        @if ($sub->id)
-                            <div id="subTaskTitle">{{ $sub->title }}</div>
-                            <div id="taskDesc">{{ $sub->description }}</div>
-                        @endif
-                    @endforeach
-                </div>
-
-                <div class="dates">
-                    <h4 id="task_Created_date">Created: {{ $taskContent->create_date }}</h4>
-                    <h4 id="task_End_date">Dead Line: {{ $taskContent->deadline }}</h4>
-                </div>
-            @endforeach
+            <div class="dates">
+                <h4 id="task_Created_date">Created: {{ $task->create_date }}</h4>
+                <h4 id="task_End_date">Dead Line: {{ $task->deadline }}</h4>
+            </div>
         </div>
     </head>
 
@@ -71,6 +83,10 @@
             padding: 0;
             margin: 0;
 
+        }
+
+        .createSubTask {
+            display: none;
         }
 
         .AppBar {
@@ -93,6 +109,23 @@
 
             margin: 0;
             text-align: center;
+
+            .barTitleContainer {
+                align-self: center;
+                justify-self: center;
+            }
+
+            #actions {
+                position: absolute;
+                left: 89%;
+                align-self: center;
+
+                #CreateTask {
+                    text-decoration: none;
+                    color: #0099ff;
+                    font-weight: bold;
+                }
+            }
         }
 
         #bartitle {
@@ -118,15 +151,37 @@
             margin: 20px;
         }
 
+        .input {
+            width: 90%;
+            background: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            box-shadow: #cff0ff 0px 10px 10px -5px;
+            border-inline: 2px solid transparent;
+        }
+
+        .input::-moz-placeholder {
+            color: rgb(170, 170, 170);
+        }
+
+        .input::placeholder {
+            color: rgb(170, 170, 170);
+        }
+
+        .input:focus {
+            outline: none;
+            border-inline: 2px solid #12b1d1;
+        }
+
         #taskTitle {
             align-self: center;
             justify-self: center;
             color: #0099ff;
         }
 
-        .descriptionContainer{
-           
-        }
+        .descriptionContainer {}
 
         #taskDesc {
             align-self: flex-start;

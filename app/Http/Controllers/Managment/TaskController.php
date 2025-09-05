@@ -34,12 +34,12 @@ class TaskController extends Controller
         return view('pages.Tasks.view-tasks', ['tasks' => $tasks, 'categories' => $categories, 'userId' => $userId]);
     }
 
-    public function showClickedTask($taskId)
+    public function showClickedTask($taskId, $userId)
     {
         $task = $this->taskRepository->getTask($taskId);
 
         // return response()->json($task);
-        return view('pages.Tasks.view-clickedTask', ['task' => $task]);
+        return view('pages.Tasks.view-clickedTask', ['task' => $task, 'userId' => $userId]);
     }
 
     public function searchTask(Request $request, $userId)
@@ -71,20 +71,54 @@ class TaskController extends Controller
                 'deadline' => ['required', 'date'],
                 'status' => ['required', 'string'],
                 'categories' => ['required', 'array', 'min:1'],
-                'subtitle' => ['nullable', 'string'],
-                'subTask' => ['nullable', 'string']
             ]
         );
 
-        if (!empty($validated['subtitle']) && empty($validated['subTask'])) {
-            return redirect()->route('createTask', $userId)->with('status', 'Please Insert a Sub Task');
-        } else if (empty($validated['subtitle']) && !empty($validated['subTask'])) {
-            return redirect()->route('createTask', $userId)->with('status', 'Please Insert a Sub Task Title');
-        } else {
-            $this->taskRepository->createTask($validated, $userId);
-        }
+        // if (!empty($validated['subtitle']) && empty($validated['subTask'])) {
+        //     return redirect()->route('createTask', $userId)->with('status', 'Please Insert a Sub Task');
+        // } else if (empty($validated['subtitle']) && !empty($validated['subTask'])) {
+        //     return redirect()->route('createTask', $userId)->with('status', 'Please Insert a Sub Task Title');
+        // } else {
+        //     $this->taskRepository->createTask($validated, $userId);
+        // }
+
+        $this->taskRepository->createTask($validated, $userId);
         // $category = $this->categoryRepository->getSingleCategory($validated['categories']);
 
         return redirect()->route('createTask', $userId)->with('status', 'Task Created');
+    }
+
+    public function showEditPage($taskId, $userId)
+    {
+        $task = $this->taskRepository->getTask($taskId);
+        $categories = $this->categoryRepository->getAllCategories();
+
+        return view('pages.Tasks.edit-task', ['task' => $task, 'categories' => $categories, 'userId' => $userId]);
+    }
+
+    public function editTask(Request $request, $taskId, $userId)
+    {
+        $validated = $request->validate(
+            [
+                'title' => ['required', 'string'],
+                'description' => ['required', 'string'],
+                'deadline' => ['required', 'date'],
+                'status' => ['required', 'string'],
+                'categories' => ['required', 'array', 'min:1'],
+            ]
+        );
+
+        // if (!empty($validated['subtitle']) && empty($validated['subTask'])) {
+        //     return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Please Insert a Sub Task');
+        // } else if (empty($validated['subtitle']) && !empty($validated['subTask'])) {
+        //     return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Please Insert a Sub Task Title');
+        // } else {
+        //     $this->taskRepository->updateTask($taskId, $validated, $userId);
+        // }
+
+        $this->taskRepository->updateTask($taskId, $validated, $userId);
+        // $category = $this->categoryRepository->getSingleCategory($validated['categories']);
+
+        return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Task Updated');
     }
 }

@@ -22,6 +22,6 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->getCategory($categoryId,$userId);
 
         // return response()->json($category);
-        return view('pages.Categories.view-clickedCategory',['category' => $category]);
+        return view('pages.Categories.view-clickedCategory',['category' => $category,'userId' => $userId]);
     }
 }

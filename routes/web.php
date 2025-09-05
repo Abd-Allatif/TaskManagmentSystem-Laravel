@@ -19,12 +19,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/tasks/{userid}',[TaskController::class,'getTasks'])->name('getAllTasks');
-Route::get('/tasks/about_task/{taskid}',[TaskController::class,'showClickedTask'])->name('getClickedTask');
-Route::post('/tasks/searchTask/{userId}',[TaskController::class,'searchTask'])->name('searchTask');
-Route::get('/tasks/createTask/{userId}',[TaskController::class,'ShowcreateTask'])->name('createTask');
-Route::post('/tasks/create_new_task/{userId}',[TaskController::class,'createTask'])->name('createNewTask');
+Route::group([],function () {
+    Route::get('/tasks/{userid}', [TaskController::class, 'getTasks'])->name('getAllTasks');
+    Route::get('/tasks/about_task/{taskid}/{userId}', [TaskController::class, 'showClickedTask'])->name('getClickedTask');
+    Route::post('/tasks/searchTask/{userId}', [TaskController::class, 'searchTask'])->name('searchTask');
+    Route::get('/tasks/createTask/{userId}', [TaskController::class, 'ShowcreateTask'])->name('createTask');
+    Route::post('/tasks/create_new_task/{userId}', [TaskController::class, 'createTask'])->name('createNewTask');
+    Route::get('/tasks/show_edit_task/{taskId}/{userId}', [TaskController::class, 'showEditPage'])->name('showEditPage');
+    Route::put('/tasks/edit_task/{taskId}/{userId}', [TaskController::class, 'editTask'])->name('editTask');
+});
 
-route::get('/category/{categoryId}/user/{userId}',[CategoryController::class,'getClickedCategory'])->name('getClickedCategory');
+route::get('/category/{categoryId}/user/{userId}', [CategoryController::class, 'getClickedCategory'])->name('getClickedCategory');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

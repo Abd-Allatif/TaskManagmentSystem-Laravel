@@ -28,12 +28,12 @@ class CategoryRepository
             return $query->parent()->forUser($userId)->whereHas('categories' , function ($query) use ($categoryId) {
                 return $query->where('category_id','=',$categoryId);
             })->orderBy('status','desc');
-        }])->where('id','=',$categoryId)->get();
+        }])->where('id','=',$categoryId)->first();
 
         return $category;
     }
 
     public function getSingleCategory(array $categoryId){
-        return  Category::whereIn('id', $categoryId)->get();
+        return  Category::whereIn('id', $categoryId)->first();
     }
 }
