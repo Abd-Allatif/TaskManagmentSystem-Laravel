@@ -50,11 +50,26 @@
                 <label id="endflaglabel" name="endflag">End Task</label>
             </div>
 
+            <div id="toggleForm" class="showSubtaskForm">
+                <button class="showFormBtn">
+                    Create SubTasks
+                </button>
+            </div>
+
             <!-- Adding a Sub Task Creation to View Clicked Tasks -->
-            <div class="createSubTask">
-                <input placeholder="Sub Task Title (Optional)" id="subTask" name="subtitle" type="text"
-                    class="input" />
-                <textarea name="subTask" placeholder="Sub Task (Optional)" id="subTask" cols="7" rows="7" class="input"></textarea>
+            <div id="createSubTask" class="createSubTask">
+                <form action="{{ route('createSubTask', [$task->id]) }}" method="POST">
+                    @csrf
+                    <div id="subtaskList">
+                        <input placeholder="New Sub Task" id="subTask" name="subtasks[]" type="text" class="input" />
+                    </div>
+
+                    <button type="button" id="addSubtaskBtn" class="addMoreBtn">
+                        + Add More
+                    </button>
+
+                    <input type="submit" class="showFormBtn" value="Create Sub Tasks" />
+                </form>
 
             </div>
 
@@ -78,6 +93,42 @@
         </div>
     </head>
 
+    <script>
+        document.getElementById("toggleForm").addEventListener("click", function() {
+            let form = document.getElementById("createSubTask");
+
+            if (form.style.display === "none" || form.style.display === "") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        });
+
+        document.getElementById("addSubtaskBtn").addEventListener("click", function() {
+            let list = document.getElementById("subtaskList");
+
+            let div = document.createElement("div");
+            div.classList.add("subtask-row");
+
+            div.innerHTML = `
+            <input 
+                type="text" 
+                name="subtasks[]" 
+                class="input" 
+                placeholder="New Sub Task"
+            >
+            <button type="removeBtn" class="removeBtn">✕</button>
+        `;
+
+            list.appendChild(div);
+
+            // Remove button logic
+            div.querySelector(".removeBtn").addEventListener("click", function() {
+                div.remove();
+            });
+        });
+    </script>
+
     <style>
         * {
             padding: 0;
@@ -87,6 +138,73 @@
 
         .createSubTask {
             display: none;
+        }
+
+        .showFormBtn {
+            display: block;
+            width: 30%;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .showFormBtn:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+        }
+
+        .showFormBtn:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+        }
+
+        .addMoreBtn {
+            display: block;
+            width: 20%;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 204, 211) 0%,
+                    rgb(18, 114, 209) 100%);
+            color: white;
+            padding-block: 15px;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .addMoreBtn:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+        }
+
+        .addMoreBtn:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+        }
+
+        .removeBtn {
+            display: block;
+            width: 5%;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 204, 211) 0%,
+                    rgb(18, 114, 209) 100%);
+            color: white;
+            margin: 10px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
         }
 
         .AppBar {
@@ -134,10 +252,13 @@
         }
 
         .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            /* position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%); */
+
+            align-self: center;
+            justify-self: center;
 
             width: 500px;
             background: #f8f9fd;

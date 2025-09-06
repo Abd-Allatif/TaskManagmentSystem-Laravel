@@ -23,7 +23,7 @@ class VerificationController extends Controller
         $user = Auth::user();
 
         if ($user->email_verified_at) {
-            return redirect()->route('dashboard');
+            return redirect()->route('getAllTasks',$user->id);
         }
 
         $url = URL::temporarySignedRoute(
@@ -48,6 +48,6 @@ class VerificationController extends Controller
         
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('status', 'Email verified!');
+        return redirect()->route('getAllTasks',$id)->with('status', 'Email verified!');
     }
 }

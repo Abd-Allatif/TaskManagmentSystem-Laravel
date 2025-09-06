@@ -7,9 +7,6 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-
-use function PHPUnit\Framework\isEmpty;
 
 class TaskController extends Controller
 {
@@ -74,14 +71,6 @@ class TaskController extends Controller
             ]
         );
 
-        // if (!empty($validated['subtitle']) && empty($validated['subTask'])) {
-        //     return redirect()->route('createTask', $userId)->with('status', 'Please Insert a Sub Task');
-        // } else if (empty($validated['subtitle']) && !empty($validated['subTask'])) {
-        //     return redirect()->route('createTask', $userId)->with('status', 'Please Insert a Sub Task Title');
-        // } else {
-        //     $this->taskRepository->createTask($validated, $userId);
-        // }
-
         $this->taskRepository->createTask($validated, $userId);
         // $category = $this->categoryRepository->getSingleCategory($validated['categories']);
 
@@ -105,20 +94,15 @@ class TaskController extends Controller
                 'deadline' => ['required', 'date'],
                 'status' => ['required', 'string'],
                 'categories' => ['required', 'array', 'min:1'],
+                'subtasks' => ['required', 'array'],
+                'subtasks.*' => ['required', 'string', 'max:255'],
             ]
         );
-
-        // if (!empty($validated['subtitle']) && empty($validated['subTask'])) {
-        //     return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Please Insert a Sub Task');
-        // } else if (empty($validated['subtitle']) && !empty($validated['subTask'])) {
-        //     return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Please Insert a Sub Task Title');
-        // } else {
-        //     $this->taskRepository->updateTask($taskId, $validated, $userId);
-        // }
 
         $this->taskRepository->updateTask($taskId, $validated, $userId);
         // $category = $this->categoryRepository->getSingleCategory($validated['categories']);
 
+        // return response()->json($validated);
         return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Task Updated');
     }
 }

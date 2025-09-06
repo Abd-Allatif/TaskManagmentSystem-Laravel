@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 //use Your Model
 
@@ -61,18 +62,6 @@ class TaskRepository
             $user = User::find($userId);
 
             $task->users()->attach($user->id);
-
-            // if (!empty($data['subtitle'])) {
-            //     $subTask = Task::create([
-            //         'title' => $data['subtitle'],
-            //         'description' => $data['subTask'],
-            //         'create_date' => Carbon::now(),
-            //         'deadline' => $data['deadline'],
-            //         'status' => $data['status'],
-            //         'end_flag' => false,
-            //         'parentTask_id' => $task->id
-            //     ]);
-            // }
         });
     }
 
@@ -98,38 +87,36 @@ class TaskRepository
 
             $task->users()->sync($user->id);
 
-            // if (isset($data['subtitle'])) {
-            //     $subTask = Task::where('parentTask_id',$task->id)->first();
-            //     $subTask->update([
-            //         'title' => $data['subtitle'],
-            //         'description' => $data['subTask'],
-            //         'create_date' => Carbon::now(),
-            //         'deadline' => $data['deadline'],
-            //         'status' => $data['status'],
-            //         'end_flag' => false,
-            //         'parentTask_id' => $task->id
-            //     ]);
-            // } else {
-            //     $subTask = Task::create([
-            //         'title' => $data['subtitle'],
-            //         'description' => $data['subTask'],
-            //         'create_date' => Carbon::now(),
-            //         'deadline' => $data['deadline'],
-            //         'status' => $data['status'],
-            //         'end_flag' => false,
-            //         'parentTask_id' => $task->id
-            //     ]);
-            // }
+            if (count($data['subtasks']) >= 1) {
+                foreach ($data['subtasks'] as $id => $description) {
+                    $sub = Task::find($id);
+
+                    $sub->update([
+                        'title' => Str::words($description, 3, ''),
+                        'description' => $description,
+                        'create_date' => $task->create_date,
+                        'deadline' => $task->deadline,
+                        'status' => $task->status,
+                        'end_flag' => $task->end_flag,
+                        'parentTask_id' => $taskId
+                    ]);
+                }
+            }
         });
     }
 
-    public function createSubTask($taskId, $data, $userId): void
+    public function createSubTask($taskId, $data): void
     {
+        $task = Task::find($taskId);
 
-    }
-
-    public function updateSubTask($taskId,$data,$userId): void
-    {
-        
+        $task = Task::create([
+            'title' => Str::words($data, 3, ''),
+            'description' => $data,
+            'create_date' => $task->create_date,
+            'deadline' => $task->deadline,
+            'status' => $task->status,
+            'end_flag' => $task->end_flag,
+            'parentTask_id' => $taskId
+        ]);
     }
 }

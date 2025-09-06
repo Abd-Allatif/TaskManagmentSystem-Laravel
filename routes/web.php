@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Managment\CategoryController;
+use App\Http\Controllers\Managment\SubTaskController;
 use App\Http\Controllers\Managment\TaskController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::group([],function () {
+Route::middleware(['auth','verifyEmailAddress'])->group(function () {
     Route::get('/tasks/{userid}', [TaskController::class, 'getTasks'])->name('getAllTasks');
     Route::get('/tasks/about_task/{taskid}/{userId}', [TaskController::class, 'showClickedTask'])->name('getClickedTask');
     Route::post('/tasks/searchTask/{userId}', [TaskController::class, 'searchTask'])->name('searchTask');
@@ -27,6 +28,8 @@ Route::group([],function () {
     Route::post('/tasks/create_new_task/{userId}', [TaskController::class, 'createTask'])->name('createNewTask');
     Route::get('/tasks/show_edit_task/{taskId}/{userId}', [TaskController::class, 'showEditPage'])->name('showEditPage');
     Route::put('/tasks/edit_task/{taskId}/{userId}', [TaskController::class, 'editTask'])->name('editTask');
+
+    Route::post('/tasks/create_subtask/{taskId}', [SubTaskController::class, 'createSubTask'])->name('createSubTask');
 });
 
 route::get('/category/{categoryId}/user/{userId}', [CategoryController::class, 'getClickedCategory'])->name('getClickedCategory');

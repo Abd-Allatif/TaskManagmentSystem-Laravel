@@ -50,16 +50,11 @@
                     </ul>
                 </div>
             </div>
-            <?php  //dd($task->subtask); ?>
-            
-            <div>
-                <input placeholder="Sub Task Title (Optional)" id="subTask" value="{{ !isset($task->subtask[0]->title) ? "" : $task->subtask[0]->title }}"
-                    name="subtitle" type="text" class="input" />
-            </div>
 
-            <div>
-                <textarea name="subTask" placeholder="Sub Task (Optional)" id="subTask" cols="7" rows="7" class="input"> {{ !isset($task->subtask[0]->description) ? "" : $task->subtask[0]->description }}</textarea>
-            </div>
+            @foreach ($task->subtask as $sub)
+                <input placeholder="Sub Tasks" id="subtasks" name="subtasks[{{ $sub->id }}]" type="text"
+                    value="{{ $sub->description }}" class="input" required="" />
+            @endforeach
 
             <input type="submit" class="CreateTask" />
         </form>
@@ -70,11 +65,85 @@
             color: grey;
         }
 
+        .editSubTask {
+            display: none;
+        }
+
+        .showFormBtn {
+            display: block;
+            width: 30%;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .showFormBtn:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+        }
+
+        .showFormBtn:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+        }
+
+        .addMoreBtn {
+            display: block;
+            width: 30%;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 204, 211) 0%,
+                    rgb(18, 114, 209) 100%);
+            color: white;
+            padding-block: 15px;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .addMoreBtn:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+        }
+
+        .addMoreBtn:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+        }
+
+        .removeBtn {
+            display: block;
+            width: 5%;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 204, 211) 0%,
+                    rgb(18, 114, 209) 100%);
+            color: white;
+            margin: 10px auto;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
         .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            /* position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); */
+
+            align-self: center;
+            justify-self: center;
 
             width: 350px;
             background: #f8f9fd;
@@ -263,7 +332,7 @@
             margin-top: 20px;
         }
 
-        .form .input {
+        .input {
             width: 90%;
             background: white;
             border: none;
@@ -274,37 +343,37 @@
             border-inline: 2px solid transparent;
         }
 
-        .form .input::-moz-placeholder {
+        .input::-moz-placeholder {
             color: rgb(170, 170, 170);
         }
 
-        .form .input::placeholder {
+        .input::placeholder {
             color: rgb(170, 170, 170);
         }
 
-        .form .input:focus {
+        .input:focus {
             outline: none;
             border-inline: 2px solid #12b1d1;
         }
 
-        .form .forgot-password {
+        .forgot-password {
             display: block;
             margin-top: 10px;
             margin-left: 10px;
         }
 
-        .form #createAccount {
+        #createAccount {
             margin-top: 10px;
             margin-left: 45%;
         }
 
-        .form .forgot-password a {
+        .forgot-password a {
             font-size: 11px;
             color: #0099ff;
             text-decoration: none;
         }
 
-        .form .CreateTask {
+        .CreateTask {
             display: block;
             width: 100%;
             font-weight: bold;
@@ -320,12 +389,12 @@
             transition: all 0.2s ease-in-out;
         }
 
-        .form .CreateTask:hover {
+        .CreateTask:hover {
             transform: scale(1.03);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
         }
 
-        .form .CreateTask:active {
+        .CreateTask:active {
             transform: scale(0.95);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
         }
