@@ -16,6 +16,8 @@
         <div class="container">
             <div id="taskTitle">{{ $task->title }}</div>
 
+            <x-auth-session-status class="text" :status="session('status')" />
+
             <div style="display:flex;flex-direction:row;">
                 @foreach ($task->categories as $categories)
                     <div
@@ -45,10 +47,10 @@
                         <div class="red_dot"></div>
                     </div>
                 @endif
-
-                <input id="endflag" name="endflag" type="checkbox">
-                <label id="endflaglabel" name="endflag">End Task</label>
             </div>
+
+            <form action="{{ route('EndTask', [$task->id, $userId]) }}" method="POST">@csrf <input id="endFlag"
+                    name="endflag" value="End Task" type="submit"></form>
 
             <div id="toggleForm" class="showSubtaskForm">
                 <button class="showFormBtn">
@@ -90,6 +92,9 @@
                 <h4 id="task_Created_date">Created: {{ $task->create_date }}</h4>
                 <h4 id="task_End_date">Dead Line: {{ $task->deadline }}</h4>
             </div>
+
+            <form action="{{ route('StartTask', [$task->id, $userId]) }}" method="POST">@csrf <input class="showFormBtn"
+                    name="endflag" value="Start Task" type="submit"></form>
         </div>
     </head>
 
@@ -156,6 +161,15 @@
             transition: all 0.2s ease-in-out;
         }
 
+        .text {
+            align-self: center;
+            justify-self: center;
+
+            padding-top: 15px;
+
+            color: red;
+        }
+
         .showFormBtn:hover {
             transform: scale(1.03);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
@@ -207,6 +221,34 @@
             transition: all 0.2s ease-in-out;
         }
 
+        #endFlag {
+            display: inline;
+            width: 15%;
+            height: 30px;
+            font-weight: bold;
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+
+            margin-top: 12px;
+            margin-left: 15px;
+        }
+
+        #endFlag:hover {
+            transform: scale(1.03);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+        }
+
+        #endFlag:active {
+            transform: scale(0.95);
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+        }
+
         .AppBar {
             display: flex;
 
@@ -253,9 +295,9 @@
 
         .container {
             /* position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%); */
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%); */
 
             align-self: center;
             justify-self: center;

@@ -52,7 +52,9 @@
                 <input type="submit" class="searchButton" value="Search">
             </div>
         </form>
-
+        
+        <x-auth-session-status class="text" :status="session('status')" />
+        
         <div class="container">
             <ul class="taskList">
                 @foreach ($tasks as $task)
@@ -212,6 +214,15 @@
             border: none;
             background: none;
             color: #8b8ba7;
+        }
+
+        .text{
+            align-self: center;
+            justify-self: center;
+
+            padding-top: 15px;
+
+            color: red;
         }
 
 

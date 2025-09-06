@@ -74,7 +74,7 @@ class TaskController extends Controller
         $this->taskRepository->createTask($validated, $userId);
         // $category = $this->categoryRepository->getSingleCategory($validated['categories']);
 
-        return redirect()->route('createTask', $userId)->with('status', 'Task Created');
+        return redirect()->route('getAllTasks', $userId)->with('status', 'Task Created');
     }
 
     public function showEditPage($taskId, $userId)
@@ -103,6 +103,6 @@ class TaskController extends Controller
         // $category = $this->categoryRepository->getSingleCategory($validated['categories']);
 
         // return response()->json($validated);
-        return redirect()->route('showEditPage', [$taskId, $userId])->with('status', 'Task Updated');
+        return redirect()->route('getClickedTask', [$taskId, $userId])->with('status', 'Task Updated');
     }
 }

@@ -119,4 +119,22 @@ class TaskRepository
             'parentTask_id' => $taskId
         ]);
     }
+
+    public function startTask($taskId)
+    {
+        $task = Task::find($taskId);
+
+        $task->status = 'in_progress';
+
+        $task->save();
+    }
+
+    public function endTask($taskId)
+    {
+        $task = Task::find($taskId);
+
+        $task->status = 'completed';
+
+        $task->save();
+    }
 }
