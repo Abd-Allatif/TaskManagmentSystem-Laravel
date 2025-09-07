@@ -18,20 +18,19 @@ class TaskFactory extends Factory
 
     public function definition(): array
     {
-        $created = $this->faker->dateTimeBetween('-60 days', '-1 day');
+        $created = fake()->dateTimeBetween('-60 days', '-1 day');
 
-        $status = $this->faker->randomElement(['pending', 'in_progress', 'completed']);
-        $end    = $status === 'completed' ? true : $this->faker->boolean(10);
+        $status = fake()->randomElement(['pending', 'in_progress', 'completed']);
+        $end    = $status == 'completed' ? true : false;
 
         return [
-            'title'         => $this->faker->sentence(4),
-            'description'   => $this->faker->paragraph(),
-            'create_date'   => $created, // matches your column name
-            // deadline is DATE, so store a date string after create_date
-            'deadline'      => Carbon::instance($created)->addDays($this->faker->numberBetween(1, 60))->toDateString(),
+            'title'         => fake()->sentence(4),
+            'description'   => fake()->paragraph(),
+            'create_date'   => $created,
+            'deadline'      => Carbon::instance($created)->addDays(fake()->numberBetween(1, 60))->toDateString(),
             'status'        => $status,
             'end_flag'      => $end,
-            'parentTask_id' => null, // root by default
+            'parentTask_id' => null,
         ];
     }
 }
