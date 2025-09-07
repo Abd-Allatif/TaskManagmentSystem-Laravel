@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $users      = User::factory(10)->create();
+        $users = User::factory(10)->create();
         $categories = Category::factory(6)->create();
 
         $mainTasks = Task::factory(25)->create([
@@ -23,15 +23,15 @@ class DatabaseSeeder extends Seeder
 
         $mainTasks->each(function ($main) {
             if (fake()->boolean(60)) {
-                Task::factory(fake()->numberBetween(1,3))->create([
+                Task::factory(fake()->numberBetween(1, 3))->create([
                     'parentTask_id' => $main->id,
                 ]);
             }
         });
 
         Task::query()->each(function (Task $task) use ($users, $categories) {
-            $task->users()->attach($users->random(fake()->numberBetween(1,3))->pluck('id'));
-            $task->categories()->attach($categories->random(fake()->numberBetween(1,3))->pluck('id'));
+            $task->users()->attach($users->random(fake()->numberBetween(1, 3))->pluck('id'));
+            $task->categories()->attach($categories->random(fake()->numberBetween(1, 3))->pluck('id'));
         });
     }
 }

@@ -19,12 +19,11 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         $created = fake()->dateTimeBetween('-60 days', '-1 day');
-
         $status = fake()->randomElement(['pending', 'in_progress', 'completed']);
-        $end    = $status == 'completed' ? true : false;
+        $end = $status == 'completed' ? true : false;
 
         return [
-            'title'         => fake()->sentence(4),
+            'title'         => fake()->sentence(3),
             'description'   => fake()->paragraph(),
             'create_date'   => $created,
             'deadline'      => Carbon::instance($created)->addDays(fake()->numberBetween(1, 60))->toDateString(),
