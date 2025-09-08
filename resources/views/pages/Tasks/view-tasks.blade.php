@@ -5,7 +5,7 @@
     <head>
         <div class="AppBar">
             <div class="barTitleContainer">
-                <h1 id="bartitle">{{$userName}}s Tasks</h1>
+                <h1 id="bartitle">{{ $userName }}s Tasks</h1>
             </div>
 
             <div id="actions">
@@ -20,7 +20,7 @@
                     <div class="categoriesList">
                         @foreach ($categories as $category)
                             <button class="categoryBtn" style="color: {{ $category->color }}"
-                                onClick="window.location.href='{{ route('getClickedCategory', [$category->id,$category->name]) }}'">
+                                onClick="window.location.href='{{ route('getClickedCategory', [$category->id, $category->name]) }}'">
                                 {{ $category->name }}</button>
                         @endforeach
                     </div>
@@ -52,9 +52,9 @@
                 <input type="submit" class="searchButton" value="Search">
             </div>
         </form>
-        
+
         <x-auth-session-status class="text" :status="session('status')" />
-        
+
         <div class="container">
             <ul class="taskList">
                 @foreach ($tasks as $task)
@@ -99,11 +99,12 @@
 
                             <div id="aboutTask">
                                 <button class="button"
-                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id,$task->title]) }}'">View
+                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id, $task->title]) }}'">View
                                     Details</button>
                             </div>
                     </li>
                 @endforeach
+                {{ $tasks->links('pagination::default') }}
             </ul>
         </div>
     </head>
@@ -216,7 +217,7 @@
             color: #8b8ba7;
         }
 
-        .text{
+        .text {
             align-self: center;
             justify-self: center;
 

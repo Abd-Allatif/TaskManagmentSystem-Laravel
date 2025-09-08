@@ -24,9 +24,9 @@ class TaskRepository
                 'subTask'
             ]
         )->forUser($userId)->orderBy('status', 'desc')
-            ->get();
+            ->paginate(10);
 
-        return $tasks;
+        return $tasks->onEachSide(2);
     }
 
     public function getTask($taskId)
