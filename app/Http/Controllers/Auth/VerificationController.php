@@ -48,6 +48,6 @@ class VerificationController extends Controller
         
         Auth::login($user);
 
-        return redirect()->route('getAllTasks',$id)->with('status', 'Email verified!');
+        return redirect()->route('getAllTasks')->with('status', 'Email verified!');
     }
 }

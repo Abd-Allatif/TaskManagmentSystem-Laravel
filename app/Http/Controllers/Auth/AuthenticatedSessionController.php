@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        return redirect()->intended(route('getAllTasks', $user->id,absolute: false));
+        return redirect()->intended(route('getAllTasks',absolute: false));
     }
 
     /**

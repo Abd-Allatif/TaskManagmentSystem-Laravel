@@ -58,6 +58,6 @@ class RegisteredUserController extends Controller
 
         VerificationEmailSendJob::dispatch($user, $url);
 
-        return redirect(route('getAllTasks',$user->id,absolute:false));
+        return redirect(route('getAllTasks',absolute:false));
     }
 }

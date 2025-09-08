@@ -25,7 +25,7 @@
             <!-- Remember Me -->
             <div>
                 <div class="checkbox-wrapper">
-                    <input type="checkbox" class="check" id="check1-61">
+                    <input type="checkbox" class="check" id="check1-61" name="remember">
                     <label for="check1-61" class="label">
                         <svg width="30" height="30" viewBox="0 0 95 95">
                             <rect x="30" y="20" width="35" height="35" stroke="#0099ff" fill="none"></rect>
