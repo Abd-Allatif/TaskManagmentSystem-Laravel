@@ -8,7 +8,7 @@
         </div>
 
         <div id="BackButton">
-            <button class="backButton" onclick="window.location.href='{{ route('getAllTasks', $userId) }}'">Back</button>
+            <button class="backButton" onclick="window.location.href='{{ route('getAllTasks') }}'">Back</button>
         </div>
 
         @foreach ($searchResult as $task)
@@ -56,7 +56,7 @@
 
                             <div id="aboutTask">
                                 <button class="button"
-                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id,$userId]) }}'">View
+                                    onclick="window.location.href='{{ route('getClickedTask', $task->id) }}'">View
                                     Details</button>
                             </div>
                     </li>

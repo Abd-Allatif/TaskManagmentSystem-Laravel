@@ -5,37 +5,40 @@ namespace App\Http\Controllers\Managment;
 use App\Http\Controllers\Controller;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StatusController extends Controller
 {
     protected TaskRepository $taskRepository;
+    protected $user;
 
     public function __construct(TaskRepository $taskRepository)
     {
         $this->taskRepository = $taskRepository;
+        $this->user = Auth::user();
     }
 
-    public function startTask($taskId, $userId)
+    public function startTask($taskId)
     {
         $task = $this->taskRepository->getTask($taskId);
 
         if ($task->status == 'pending') {
             $this->taskRepository->startTask($taskId);
-            return redirect()->route('getClickedTask', [$taskId, $userId])->with('status', 'Task Started');
+            return redirect()->route('getClickedTask', $taskId)->with('status', 'Task Started');
         } else {
-            return redirect()->route('getClickedTask', [$taskId, $userId])->with('status', 'Error The Task Must be Pending to start it');
+            return redirect()->route('getClickedTask', $taskId)->with('status', 'Error The Task Must be Pending to start it');
         }
     }
 
-    public function endTask($taskId, $userId)
+    public function endTask($taskId)
     {
         $task = $this->taskRepository->getTask($taskId);
 
         if ($task->status == 'in_progress') {
             $this->taskRepository->endTask($taskId);
-            return  redirect()->route('getClickedTask', [$taskId, $userId])->with('status', 'Task Completed');
+            return  redirect()->route('getClickedTask', $taskId)->with('status', 'Task Completed');
         } else {
-            return redirect()->route('getClickedTask', [$taskId, $userId])->with('status', 'Please start the task to end it');
+            return redirect()->route('getClickedTask',$taskId)->with('status', 'Please start the task to end it');
         }
     }
 }

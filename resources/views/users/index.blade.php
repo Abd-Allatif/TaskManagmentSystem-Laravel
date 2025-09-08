@@ -65,10 +65,10 @@
                                     </div>
                                     <ul class="nav">
                                         <li>
-                                            {{-- <a href="{{ route('home') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-chart-pie-36"></i>
                                                 <p>{{ _('Dashboard') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li>
                                             <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
@@ -80,61 +80,61 @@
                                             <div class="collapse show" id="laravel-examples">
                                                 <ul class="nav pl-4">
                                                     <li >
-                                                        {{-- <a href="{{ route('profile.edit')  }}">
+                                                        <a href="">
                                                             <i class="tim-icons icon-single-02"></i>
                                                             <p>{{ _('User Profile') }}</p>
-                                                        </a> --}}
+                                                        </a>
                                                     </li>
                                                     <li class="active">
-                                                        {{-- <a href="{{ route('user.index')  }}">
+                                                        <a href="">
                                                             <i class="tim-icons icon-bullet-list-67"></i>
                                                             <p>{{ _('User Management') }}</p>
-                                                        </a> --}}
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <li >
-                                            {{-- <a href="{{ route('pages.icons') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-atom"></i>
                                                 <p>{{ _('Icons') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li >
-                                            {{-- <a href="{{ route('pages.maps') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-pin"></i>
                                                 <p>{{ _('Maps') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li >
-                                            {{-- <a href="{{ route('pages.notifications') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-bell-55"></i>
                                                 <p>{{ _('Notifications') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li >
-                                            {{-- <a href="{{ route('pages.tables') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-puzzle-10"></i>
                                                 <p>{{ _('Table List') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li >
-                                            {{-- <a href="{{ route('pages.typography') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-align-center"></i>
                                                 <p>{{ _('Typography') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li >
-                                            {{-- <a href="{{ route('pages.rtl') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-world"></i>
                                                 <p>{{ _('RTL Support') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                         <li class=" {{ $pageSlug == 'upgrade' ? 'active' : '' }} bg-info">
-                                            {{-- <a href="{{ route('pages.upgrade') }}">
+                                            <a href="">
                                                 <i class="tim-icons icon-spaceship"></i>
                                                 <p>{{ _('Upgrade to PRO') }}</p>
-                                            </a> --}}
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>

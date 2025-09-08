@@ -6,6 +6,10 @@
         <div class="AppBar">
             <h1 id="bartitle">Category</h1>
         </div>
+        
+         <div id="BackButton">
+            <button class="backButton" onclick="window.location.href='{{ route('getAllTasks') }}'">Back</button>
+        </div>
 
         <div class="container">
             <h2 id="CategoryName">{{ $category->name }}</h2>
@@ -59,7 +63,7 @@
 
                         <div id="aboutTask">
                             <button class="button"
-                                onclick="window.location.href='{{ route('getClickedTask', [$task->id,$userId]) }}'">View
+                                onclick="window.location.href='{{ route('getClickedTask',$task->id) }}'">View
                                 Details</button>
                         </div>
                 </li>
@@ -99,6 +103,35 @@
         #bartitle {
             align-self: center;
             color: #0099ff;
+        }
+
+        #BackButton {
+            align-self: flex-start;
+            justify-self: flex-start;
+
+            margin-left: 20px;
+        }
+
+        .backButton {
+            display: block;
+            width: 100px;
+            font-weight: bold;
+
+            align-self: center;
+            justify-self: center;
+
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
+
+            margin-top: 20px;
+
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
         }
 
         .container {

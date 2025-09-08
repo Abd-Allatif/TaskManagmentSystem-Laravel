@@ -2,10 +2,14 @@
 
 
 @section('content')
+    <div id="BackButton">
+        <button class="backButton" onclick="window.location.href='{{ route('getAllTasks') }}'">Back</button>
+    </div>
+
     <div class="container">
         <x-auth-session-status class="text" :status="session('status')" />
 
-        <form class="form" method="POST" action="{{ route('createNewTask', $userId) }}">
+        <form class="form" method="POST" action="{{ route('createNewTask') }}">
             @csrf
 
             <div>
@@ -49,12 +53,41 @@
                     </ul>
                 </div>
             </div>
-            
+
             <input type="submit" class="CreateTask" />
         </form>
     </div>
 
     <style>
+        #BackButton {
+            align-self: flex-start;
+            justify-self: flex-start;
+
+            margin-left: 20px;
+        }
+
+        .backButton {
+            display: block;
+            width: 100px;
+            font-weight: bold;
+
+            align-self: center;
+            justify-self: center;
+
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
+
+            margin-top: 20px;
+
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
         .text {
             color: grey;
         }

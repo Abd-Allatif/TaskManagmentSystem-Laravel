@@ -9,8 +9,12 @@
             </div>
 
             <div id="actions">
-                <a id="CreateTask" href="{{ route('showEditPage', [$task->id, $userId]) }}">Edit Task</a>
+                <a id="CreateTask" href="{{ route('showEditPage', [$task->id,$task->title]) }}">Edit Task</a>
             </div>
+        </div>
+
+        <div id="BackButton">
+            <button class="backButton" onclick="window.location.href='{{ route('getAllTasks') }}'">Back</button>
         </div>
 
         <div class="container">
@@ -49,7 +53,7 @@
                 @endif
             </div>
 
-            <form action="{{ route('EndTask', [$task->id, $userId]) }}" method="POST">@csrf <input id="endFlag"
+            <form action="{{ route('EndTask', $task->id) }}" method="POST">@csrf <input id="endFlag"
                     name="endflag" value="End Task" type="submit"></form>
 
             <div id="toggleForm" class="showSubtaskForm">
@@ -93,7 +97,7 @@
                 <h4 id="task_End_date">Dead Line: {{ $task->deadline }}</h4>
             </div>
 
-            <form action="{{ route('StartTask', [$task->id, $userId]) }}" method="POST">@csrf <input class="showFormBtn"
+            <form action="{{ route('StartTask', $task->id) }}" method="POST">@csrf <input class="showFormBtn"
                     name="endflag" value="Start Task" type="submit"></form>
         </div>
     </head>
@@ -139,6 +143,35 @@
             padding: 0;
             margin: 0;
 
+        }
+
+        #BackButton {
+            align-self: flex-start;
+            justify-self: flex-start;
+
+            margin-left: 20px;
+        }
+
+        .backButton {
+            display: block;
+            width: 100px;
+            font-weight: bold;
+
+            align-self: center;
+            justify-self: center;
+
+            background: linear-gradient(45deg,
+                    rgb(16, 137, 211) 0%,
+                    rgb(18, 177, 209) 100%);
+            color: white;
+            padding-block: 15px;
+
+            margin-top: 20px;
+
+            border-radius: 20px;
+            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+            border: none;
+            transition: all 0.2s ease-in-out;
         }
 
         .createSubTask {
@@ -295,9 +328,9 @@
 
         .container {
             /* position: absolute;
-                                top: 50%;
-                                left: 50%;
-                                transform: translate(-50%, -50%); */
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-50%, -50%); */
 
             align-self: center;
             justify-self: center;

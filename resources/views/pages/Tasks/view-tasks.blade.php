@@ -5,11 +5,11 @@
     <head>
         <div class="AppBar">
             <div class="barTitleContainer">
-                <h1 id="bartitle">Tasks</h1>
+                <h1 id="bartitle">{{$userName}}s Tasks</h1>
             </div>
 
             <div id="actions">
-                <a id="CreateTask" href="{{ route('createTask', $userId) }}">Create Task</a>
+                <a id="CreateTask" href="{{ route('createTask') }}">Create Task</a>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                     <div class="categoriesList">
                         @foreach ($categories as $category)
                             <button class="categoryBtn" style="color: {{ $category->color }}"
-                                onClick="window.location.href='{{ route('getClickedCategory', [$category->id, $userId]) }}'">
+                                onClick="window.location.href='{{ route('getClickedCategory', [$category->id,$category->name]) }}'">
                                 {{ $category->name }}</button>
                         @endforeach
                     </div>
@@ -28,7 +28,7 @@
             </ul>
         </div>
 
-        <form class="form" method="POST" action="{{ route('searchTask', $userId) }}">
+        <form class="form" method="POST" action="{{ route('searchTask') }}">
             @csrf
 
             <button>
@@ -99,7 +99,7 @@
 
                             <div id="aboutTask">
                                 <button class="button"
-                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id,$userId]) }}'">View
+                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id,$task->title]) }}'">View
                                     Details</button>
                             </div>
                     </li>
@@ -437,7 +437,7 @@
 
         .button:hover {
             transform: scale(1.03);
-            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+            box-shadow: #85bdd7e0 0px 23px 10px -20px;
         }
 
         .button:active {
