@@ -31,9 +31,9 @@
             </div>
 
             <div class="checkBox">
-                <input type="radio" name="status" value="pending" checked>
+                <input type="radio" name="status" value="{{0}}" checked>
                 <label for="status">Pending</label>
-                <input id="in_progress" type="radio" name="status" value="in_progress">
+                <input id="in_progress" type="radio" name="status" value="{{2}}">
                 <label for="status">In Progress</label>
             </div>
 

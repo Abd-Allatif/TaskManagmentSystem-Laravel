@@ -9,7 +9,7 @@
             </div>
 
             <div id="actions">
-                <a id="CreateTask" href="{{ route('showEditPage', [$task->id,$task->title]) }}">Edit Task</a>
+                <a id="CreateTask" href="{{ route('showEditPage', [$task->id, $task->title]) }}">Edit Task</a>
             </div>
         </div>
 
@@ -35,26 +35,31 @@
             </div>
 
             <div class="status_endflag_container">
-                @if ($task->status == 'pending')
+                @if ($task->status == \App\enums\Status::Pending)
                     <div class="statusContainer">
                         <h4 id="task_status">Pending</h4>
                         <div class="orange_dot"></div>
                     </div>
-                @elseif ($task->status == 'in_progress')
+                @elseif ($task->status == \App\enums\Status::In_Progress)
                     <div class="statusContainer">
                         <h4 id="task_status">In Progress</h4>
                         <div class="green_dot"></div>
                     </div>
-                @else
+                @elseif ($task->status == \App\enums\Status::Completed)
                     <div class="statusContainer">
                         <h4 id="task_status">Completed</h4>
+                        <div class="red_dot"></div>
+                    </div>
+                @else
+                    <div class="statusContainer">
+                        <h4 id="task_status">Expired</h4>
                         <div class="red_dot"></div>
                     </div>
                 @endif
             </div>
 
-            <form action="{{ route('EndTask', $task->id) }}" method="POST">@csrf <input id="endFlag"
-                    name="endflag" value="End Task" type="submit"></form>
+            <form action="{{ route('EndTask', $task->id) }}" method="POST">@csrf <input id="endFlag" name="endflag"
+                    value="End Task" type="submit"></form>
 
             <div id="toggleForm" class="showSubtaskForm">
                 <button class="showFormBtn">
@@ -328,9 +333,9 @@
 
         .container {
             /* position: absolute;
-                                        top: 50%;
-                                        left: 50%;
-                                        transform: translate(-50%, -50%); */
+                                                top: 50%;
+                                                left: 50%;
+                                                transform: translate(-50%, -50%); */
 
             align-self: center;
             justify-self: center;

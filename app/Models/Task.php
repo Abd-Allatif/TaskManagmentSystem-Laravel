@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\enums\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +30,7 @@ class Task extends Model
     protected $casts = [
         'create_date' => 'datetime',
         'deadline' => 'date',
+        'status' => Status::class,
         'end_flag' => 'boolean'
     ];
 

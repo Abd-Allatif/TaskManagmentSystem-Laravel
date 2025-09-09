@@ -69,7 +69,7 @@ class TaskController extends Controller
                 'title' => ['required', 'string'],
                 'description' => ['required', 'string'],
                 'deadline' => ['required', 'date'],
-                'status' => ['required', 'string'],
+                'status' => ['required', 'int'],
                 'categories' => ['required', 'array', 'min:1'],
             ]
         );
@@ -95,7 +95,7 @@ class TaskController extends Controller
                 'title' => ['required', 'string'],
                 'description' => ['required', 'string'],
                 'deadline' => ['required', 'date'],
-                'status' => ['required', 'string'],
+                'status' => ['required', 'int'],
                 'categories' => ['required', 'array', 'min:1'],
                 'subtasks' => ['nullable', 'array'],
                 'subtasks.*' => ['nullable', 'string', 'max:255'],

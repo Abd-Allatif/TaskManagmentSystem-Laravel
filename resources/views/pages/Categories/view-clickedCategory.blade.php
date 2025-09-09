@@ -6,8 +6,8 @@
         <div class="AppBar">
             <h1 id="bartitle">Category</h1>
         </div>
-        
-         <div id="BackButton">
+
+        <div id="BackButton">
             <button class="backButton" onclick="window.location.href='{{ route('getAllTasks') }}'">Back</button>
         </div>
 
@@ -38,19 +38,24 @@
                         </div>
 
                         <div class="status">
-                            @if ($task->status == 'pending')
+                            @if ($task->status == \App\enums\Status::Pending)
                                 <div class="statusContainer">
                                     <h4 id="task_status">Pending</h4>
                                     <div class="orange_dot"></div>
                                 </div>
-                            @elseif ($task->status == 'in_progress')
+                            @elseif ($task->status == \App\enums\Status::In_Progress)
                                 <div class="statusContainer">
                                     <h4 id="task_status">In Progress</h4>
                                     <div class="green_dot"></div>
                                 </div>
-                            @else
+                            @elseif ($task->status == \App\enums\Status::Completed)
                                 <div class="statusContainer">
                                     <h4 id="task_status">Completed</h4>
+                                    <div class="red_dot"></div>
+                                </div>
+                            @else
+                                <div class="statusContainer">
+                                    <h4 id="task_status">Expired</h4>
                                     <div class="red_dot"></div>
                                 </div>
                             @endif
@@ -63,7 +68,7 @@
 
                         <div id="aboutTask">
                             <button class="button"
-                                onclick="window.location.href='{{ route('getClickedTask',$task->id) }}'">View
+                                onclick="window.location.href='{{ route('getClickedTask', $task->id) }}'">View
                                 Details</button>
                         </div>
                 </li>

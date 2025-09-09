@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Managment;
 
+use App\enums\Status;
 use App\Http\Controllers\Controller;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class StatusController extends Controller
     {
         $task = $this->taskRepository->getTask($taskId);
 
-        if ($task->status == 'pending') {
+        if ($task->status == Status::Pending) {
             $this->taskRepository->startTask($taskId);
             return redirect()->route('getClickedTask', $taskId)->with('status', 'Task Started');
         } else {
@@ -34,7 +35,7 @@ class StatusController extends Controller
     {
         $task = $this->taskRepository->getTask($taskId);
 
-        if ($task->status == 'in_progress') {
+        if ($task->status == Status::In_Progress) {
             $this->taskRepository->endTask($taskId);
             return  redirect()->route('getClickedTask', $taskId)->with('status', 'Task Completed');
         } else {

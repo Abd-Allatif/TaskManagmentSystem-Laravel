@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\enums\Status;
 use App\Mail\SendDeadlineMail;
 use App\Models\Task;
 use Carbon\Carbon;
@@ -31,12 +32,12 @@ class SendAutoDeadlineMails extends Command
     {
         $now = Carbon::now();
 
-        $tasks = Task::parent()->with('users')->where('deadline', '<=', $now)->where('status', 'in_progress')->get();
+        $tasks = Task::parent()->with('users')->where('deadline', '<=', $now)->where('status', Status::In_Progress)->get();
         foreach ($tasks as $task) {
             foreach ($task->users as $user) {
                 Mail::to($user->email)->send(new SendDeadlineMail($task, $user));
                 
-                $task->status = 'completed';
+                $task->status = Status::Expired;
                 $task->save();
             }
         }

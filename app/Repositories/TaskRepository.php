@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\enums\Status;
 use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
@@ -87,7 +88,7 @@ class TaskRepository
 
             $task->users()->sync($user->id);
 
-            if (count($data['subtasks']) >= 1) {
+            if (array_key_exists('subtasks',$data) && count($data['subtasks']) >= 1) {
                 foreach ($data['subtasks'] as $id => $description) {
                     $sub = Task::find($id);
 
@@ -124,7 +125,7 @@ class TaskRepository
     {
         $task = Task::find($taskId);
 
-        $task->status = 'in_progress';
+        $task->status = Status::In_Progress;
 
         $task->save();
     }
@@ -133,7 +134,7 @@ class TaskRepository
     {
         $task = Task::find($taskId);
 
-        $task->status = 'completed';
+        $task->status = Status::Completed;
 
         $task->save();
     }

@@ -30,10 +30,10 @@
             </div>
 
             <div class="checkBox">
-                <input type="radio" name="status" value="pending" {{ $task->status == 'pending' ? 'checked' : '' }}>
+                <input type="radio" name="status" value={{0}} {{ $task->status == \App\enums\Status::Pending ? 'checked' : '' }}>
                 <label for="status">Pending</label>
-                <input id="in_progress" type="radio" name="status" value="in_progress"
-                    {{ $task->status == 'in_progress' ? 'checked' : '' }}>
+                <input id="in_progress" type="radio" name="status" value={{2}}
+                    {{ $task->status == \App\enums\Status::In_Progress ? 'checked' : '' }}>
                 <label for="status">In Progress</label>
             </div>
 

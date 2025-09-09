@@ -88,7 +88,9 @@
     }
 
     ul.pagination li.active span {
-        background: #007bff;
+        background: linear-gradient(45deg,
+                rgb(16, 137, 211) 0%,
+                rgb(18, 177, 209) 100%);
         color: #fff;
     }
 
