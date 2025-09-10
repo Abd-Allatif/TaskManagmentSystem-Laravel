@@ -16,6 +16,20 @@ use Illuminate\Support\Str;
  */
 class TaskRepository
 {
+    public function getAllTasksWithUsers()
+    {
+        // Getting the Parent Task with Categories and thier Sub Tasks Using Scope
+        $tasks = Task::parent()->with(
+            [   
+                'users',
+                'categories',
+                'subTask'
+            ]
+        )->get();
+
+        return $tasks;
+    }
+
     public function getAllTasks($userId)
     {
         // Getting the Parent Task with Categories and thier Sub Tasks Using Scope
@@ -88,7 +102,7 @@ class TaskRepository
 
             $task->users()->sync($user->id);
 
-            if (array_key_exists('subtasks',$data) && count($data['subtasks']) >= 1) {
+            if (array_key_exists('subtasks', $data) && count($data['subtasks']) >= 1) {
                 foreach ($data['subtasks'] as $id => $description) {
                     $sub = Task::find($id);
 

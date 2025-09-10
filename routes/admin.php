@@ -4,12 +4,11 @@ use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\AdminAuth\PasswordResetController;
 use App\Http\Controllers\AdminAuth\RegisteredAdminController;
 use App\Http\Controllers\AdminAuth\VerificationController;
+use App\Http\Controllers\Managment\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => 'admin'], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth:admin', 'verifyEmailAddress'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class,'index'])->middleware(['auth:admin', 'verifyEmailAddress'])->name('dashboard');
 
     Route::middleware('guest:admin')->group(function () {
         Route::get('admin-register', [RegisteredAdminController::class, 'create'])

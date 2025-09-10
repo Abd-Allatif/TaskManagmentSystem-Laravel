@@ -14,26 +14,36 @@ use Illuminate\Support\Facades\Auth;
  */
 class CategoryRepository
 {
- 
+
     // Getting All Tasks for the user
     public function getAllCategories()
     {
-       $categories = Category::all();
+        $categories = Category::all();
 
-       return $categories;
-    } 
+        return $categories;
+    }
 
-    public function getCategory($categoryId,$userId) {
-        $category = Category::with(['tasks' => function ($query) use ($userId,$categoryId){
-            return $query->parent()->forUser($userId)->whereHas('categories' , function ($query) use ($categoryId) {
-                return $query->where('category_id','=',$categoryId);
-            })->orderBy('status','desc');
-        }])->where('id','=',$categoryId)->first();
+    // Getting All Tasks for the user
+    public function getAllCategoriesWithTasks()
+    {
+        $categories = Category::with('tasks')->get();
+
+        return $categories;
+    }
+
+    public function getCategory($categoryId, $userId)
+    {
+        $category = Category::with(['tasks' => function ($query) use ($userId, $categoryId) {
+            return $query->parent()->forUser($userId)->whereHas('categories', function ($query) use ($categoryId) {
+                return $query->where('category_id', '=', $categoryId);
+            })->orderBy('status', 'desc');
+        }])->where('id', '=', $categoryId)->first();
 
         return $category;
     }
 
-    public function getSingleCategory(array $categoryId){
+    public function getSingleCategory(array $categoryId)
+    {
         return  Category::whereIn('id', $categoryId)->first();
     }
 }
