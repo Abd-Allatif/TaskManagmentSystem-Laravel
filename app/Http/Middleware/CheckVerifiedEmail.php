@@ -17,7 +17,14 @@ class CheckVerifiedEmail
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check() || is_null(Auth::user()->email_verified_at)) {
-            return redirect()->route('verification.notice');
+            if(Auth::guard('admin'))
+            {
+                 return redirect()->route('admin-verification.notice');
+            }
+            else
+            {
+                return redirect()->route('verification.notice');
+            }
         }
         
         return $next($request);

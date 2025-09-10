@@ -7,7 +7,7 @@
         <h1 class="user">Reset Password Link for {{$email}}</h1>
         <h3 class="text">Please click the url below to reset your password</h3>
 
-        <a class=".login-button" href="{{route('password.reset', $token)}}">Reset Password</a>
+        <a class=".login-button" href="{{$url}}">Reset Password</a>
 
         <h4 class="text">Thank You!</h4>
         <h6 class="text">{{env("APP_NAME")}} Team</h6>

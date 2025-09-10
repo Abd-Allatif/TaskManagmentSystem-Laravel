@@ -13,10 +13,6 @@ Route::get('/', function () {
     return view('welcome', ['user' => $user]);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verifyEmailAddress'])->name('dashboard');
-
 Route::middleware(['auth', 'verifyEmailAddress'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -43,4 +39,7 @@ Route::middleware(['auth', 'verifyEmailAddress'])->group(function () {
 
 route::get('/category/{categoryId}', [CategoryController::class, 'getClickedCategory'])->name('getClickedCategory');
 
+
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+

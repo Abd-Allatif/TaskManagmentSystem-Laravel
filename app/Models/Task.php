@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Task extends Model
 {
 
-     /** @use HasFactory<\Database\Factories\TaskFactory> */
+    /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -37,27 +37,31 @@ class Task extends Model
     // These functions are essential to tell the relations to Elequent
 
     // Gathering and getting all paernt tasks attributes
-    public function parentTask(): BelongsTo{
-        return $this->belongsTo(Task::class,'parentTask_id');
+    public function parentTask(): BelongsTo
+    {
+        return $this->belongsTo(Task::class, 'parentTask_id');
     }
 
     // Retrieving the Parent tasks
-    function scopeParent($query){
+    function scopeParent($query)
+    {
         return $query->whereNull('parentTask_id');
     }
 
     // Gathering and getting all sub tasks attributes
-    public function subTask(): HasMany{
-        return $this->hasMany(Task::class,'parentTask_id');
+    public function subTask(): HasMany
+    {
+        return $this->hasMany(Task::class, 'parentTask_id');
     }
 
     // Accessing user table
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'user_task_pivots','task_id','user_id');
+        return $this->belongsToMany(User::class, 'user_task_pivots', 'task_id', 'user_id');
     }
 
-    public function scopeForuser($query,$userId){
+    public function scopeForuser($query, $userId)
+    {
         return $query->whereHas('users', function ($query) use ($userId) {
             return $query->where('users.id', $userId);
         });
@@ -66,7 +70,18 @@ class Task extends Model
     // Accessing categories table
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class,'category_task_pivots');
+        return $this->belongsToMany(Category::class, 'category_task_pivots');
     }
 
+    public function admins(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'admin_task_pivots', 'task_id', 'admin_id');
+    }
+
+     public function scopeForaAdmin($query, $adminId)
+    {
+        return $query->whereHas('admins', function ($query) use ($adminId) {
+            return $query->where('admins.id', $adminId);
+        });
+    }
 }

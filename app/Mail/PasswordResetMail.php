@@ -18,11 +18,13 @@ class PasswordResetMail extends Mailable
      */
     public $email;
     public $token;
+    public $url;
 
-    public function __construct($email,$token)
+    public function __construct($email,$token,$url)
     {
         $this->email = $email;
         $this->token = $token;
+        $this->url = $url;
     }
 
     /**
@@ -44,7 +46,8 @@ class PasswordResetMail extends Mailable
             view: 'email.resetPass-email',
             with:[
                 'email' => $this->email,
-                'token' => $this->token
+                'token' => $this->token,
+                'url' =>  $this->url
             ]
         );
     }

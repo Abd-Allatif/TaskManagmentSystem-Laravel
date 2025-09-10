@@ -19,11 +19,13 @@ class ResetLinkEmailJOb implements ShouldQueue
 
     protected $email;
     protected $token;
+    protected $url;
 
-    public function __construct($email,$token)
+    public function __construct($email,$token,$url)
     {
         $this->email = $email;
         $this->token = $token;
+        $this->url = $url;
     }
 
     /**
@@ -31,6 +33,6 @@ class ResetLinkEmailJOb implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->email)->send(new PasswordResetMail($this->email,$this->token));
+        Mail::to($this->email)->send(new PasswordResetMail($this->email,$this->token,$this->url));
     }
 }

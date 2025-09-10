@@ -1,59 +1,46 @@
 @extends('layouts.my-layout')
 
-
 @section('content')
     <div class="container">
-        <!-- Session Status -->
-        <x-auth-session-status class="text" :status="session('status')" />
-
-        <form class="form" method="POST" action="{{ route('login') }}">
+        <h1 class="Admin">Admin</h1>
+        <form class="form" method="POST" action="{{ route('admin-password.resetPass') }}">
             @csrf
+
+            <!-- Password Reset Token -->
+            <input type="hidden" name="token" value="{{ $token }}">
 
             <!-- Email Address -->
             <div>
                 <input placeholder="E-mail" id="email" name="email" type="email" class="input" required="" />
-                <x-input-error class="text" :messages="$errors->get('email')" />
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
             <!-- Password -->
-            <div>
+            <div class="mt-4">
                 <input placeholder="Password" id="password" name="password" type="password" class="input"
                     required="" />
-                <x-input-error class="text" :messages="$errors->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
-            <!-- Remember Me -->
+            <!-- Confirm Password -->
             <div>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" class="check" id="check1-61" name="remember">
-                    <label for="check1-61" class="label">
-                        <svg width="30" height="30" viewBox="0 0 95 95">
-                            <rect x="30" y="20" width="35" height="35" stroke="#0099ff" fill="none"></rect>
-                            <g transform="translate(0,-952.36222)">
-                                <path
-                                    d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4"
-                                    stroke="#0099ff" stroke-width="3" fill="none" class="path1"></path>
-                            </g>
-                        </svg>
-                        <span>Remember me</span>
-                    </label>
-                </div>
+                <input placeholder="Confirm Password" id="password_confirmation" name="password_confirmation"
+                    type="password" class="input" required="" />
+
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
-
-            <span class="forgot-password">
-                <a href="{{ route('password.request') }}">Forgot Password ?</a>
-                <a id="createAccount" href="{{ route('register') }}">Don't have account ?</a>
-            </span>
-
-
-            <input value="Sign In" type="submit" class="login-button" />
+            <input value="Reset Password" type="submit" class="login-button" />
         </form>
     </div>
 
     <style>
-        .text {
-            color: grey;
+        .Admin {
+            /* text-align: center; */
+            justify-self: center;
+            align-self: center;
+
+            color: #0099ff;
         }
 
         .container {
@@ -150,54 +137,6 @@
         .form .login-button:active {
             transform: scale(0.95);
             box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
-        }
-
-        .checkbox-wrapper input[type="checkbox"] {
-            visibility: hidden;
-            display: none;
-        }
-
-        .checkbox-wrapper *,
-        .checkbox-wrapper ::after,
-        .checkbox-wrapper ::before {
-            box-sizing: border-box;
-            user-select: none;
-        }
-
-        .checkbox-wrapper {
-            position: relative;
-            display: block;
-            overflow: hidden;
-
-            margin-top: 20px;
-        }
-
-        .checkbox-wrapper .label {
-            cursor: pointer;
-            color: #0099ff;
-        }
-
-        .checkbox-wrapper .check {
-            width: 25px;
-            height: 25px;
-            position: absolute;
-            opacity: 0;
-        }
-
-        .checkbox-wrapper .label svg {
-            vertical-align: middle;
-        }
-
-        .checkbox-wrapper .path1 {
-            stroke-dasharray: 400;
-            stroke-dashoffset: 400;
-            transition: .5s stroke-dashoffset;
-            opacity: 0;
-        }
-
-        .checkbox-wrapper .check:checked+label svg g path {
-            stroke-dashoffset: 0;
-            opacity: 1;
         }
     </style>
 @endsection

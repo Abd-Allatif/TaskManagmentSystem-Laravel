@@ -3,10 +3,11 @@
 
 @section('content')
     <div class="container">
+        <h1 class="Admin">Admin</h1>
         <!-- Session Status -->
         <x-auth-session-status class="text" :status="session('status')" />
 
-        <form class="form" method="POST" action="{{ route('login') }}">
+        <form class="form" method="POST" action="{{ route('adminLogin') }}">
             @csrf
 
             <!-- Email Address -->
@@ -40,13 +41,11 @@
                 </div>
             </div>
 
-
             <span class="forgot-password">
-                <a href="{{ route('password.request') }}">Forgot Password ?</a>
-                <a id="createAccount" href="{{ route('register') }}">Don't have account ?</a>
+                <a href="{{ route('admin-password.request') }}">Forgot Password ?</a>
+                <a id="createAccount" href="{{ route('admin-register') }}">Don't have account ?</a>
             </span>
-
-
+            
             <input value="Sign In" type="submit" class="login-button" />
         </form>
     </div>
@@ -54,6 +53,14 @@
     <style>
         .text {
             color: grey;
+        }
+
+        .Admin {
+            /* text-align: center; */
+            justify-self: center;
+            align-self: center;
+
+            color: #0099ff;
         }
 
         .container {
