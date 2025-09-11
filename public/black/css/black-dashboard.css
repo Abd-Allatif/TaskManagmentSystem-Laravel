@@ -4801,6 +4801,7 @@ input[type="button"].btn-block {
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 400px;
     min-width: 0;
     word-wrap: break-word;
     background-color: #ffffff;
@@ -15425,17 +15426,20 @@ hr {
     text-transform: uppercase;
 }
 
-.table-responsive {
-    overflow: auto;
+.card-tasks .table-responsive {
     padding-bottom: 10px;
 
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none;
+    scrollbar-color: #0099ff transparent;
+}
+
+.card-tasks .table-responsive:hover{
+    overflow-y: auto;
 }
 
 .table-responsive::-webkit-scrollbar {
-    display: none;
+    width: 8px;
 }
+
 
 #tables .table-responsive {
     margin-bottom: 30px;
@@ -19362,6 +19366,20 @@ Copyright (c) 2015 Daniel Eden
 
 .card-chart {
     overflow: hidden;
+    scrollbar-color: #0099ff transparent;
+}
+
+.card-chart:hover{
+    overflow-y: auto;
+}
+
+.card-chart::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card-chart::-webkit-scrollbar-track {
+  background: transparent; /* Track color */
+  border-radius: 10px;
 }
 
 .card-chart .card-header .card-title i {

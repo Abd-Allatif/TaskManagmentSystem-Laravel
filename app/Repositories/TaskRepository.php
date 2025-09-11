@@ -25,7 +25,7 @@ class TaskRepository
                 'categories',
                 'subTask'
             ]
-        )->get();
+        )->orderBy('deadline','desc')->get();
 
         return $tasks;
     }

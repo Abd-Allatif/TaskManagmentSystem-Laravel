@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card-body" id="card-content">
                     @include('partials.users', ['users' => $users])
                     @include('partials.tasks', ['tasks' => $tasks])
@@ -176,6 +176,22 @@
     </div>
 
     <script>
+        function initSearch(tableId, inputId) {
+            const searchInput = document.getElementById(inputId);
+            const table = document.getElementById(tableId);
+
+            if (!searchInput || !table) return;
+
+            const rows = table.querySelectorAll("tbody tr");
+
+            searchInput.addEventListener("input", function() {
+                const query = this.value.toLowerCase().trim();
+                rows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(query) ? "" : "none";
+                });
+            });
+        }
         (function() {
             function initToggle() {
                 const container = document.querySelector('#toggle-group');
@@ -197,12 +213,19 @@
                         if (input) input.checked = true;
 
                         content.innerHTML = views[idx] || '<p>No data available.</p>';
+
+                        if (idx === 0) initSearch("usersTable", "userSearch"); 
+                        if (idx === 1) initSearch("tasksTable", "taskSearch"); 
+                        if (idx === 2) initSearch("categoriesTable", "categorySearch");
                     });
                 });
 
-                // initialize
                 const activeIndex = labels.findIndex(l => l.classList.contains('active'));
                 content.innerHTML = views[activeIndex >= 0 ? activeIndex : 0];
+
+                if (activeIndex === 0) initSearch("usersTable", "userSearch");
+                if (activeIndex === 1) initSearch("tasksTable", "taskSearch");
+                if (activeIndex === 2) initSearch("categoriesTable", "categorySearch");
             }
 
             if (document.readyState === 'loading') {

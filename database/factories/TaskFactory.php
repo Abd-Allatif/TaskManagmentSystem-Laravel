@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\enums\Status;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,8 +20,8 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         $created = fake()->dateTimeBetween('-60 days', '-1 day');
-        $status = fake()->randomElement(['pending', 'in_progress', 'completed']);
-        $end = $status == 'completed' ? true : false;
+        $status = fake()->randomElement([Status::Pending, Status::In_Progress, Status::Completed,Status::Expired]);
+        $end = $status == Status::Completed ? true : false;
 
         return [
             'title'         => fake()->sentence(3),
