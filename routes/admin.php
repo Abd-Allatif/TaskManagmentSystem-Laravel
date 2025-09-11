@@ -8,7 +8,11 @@ use App\Http\Controllers\Managment\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => 'admin'], function () {
-    Route::get('/dashboard', [AdminController::class,'index'])->middleware(['auth:admin', 'verifyEmailAddress'])->name('dashboard');
+    Route::middleware(['auth:admin', 'verifyEmailAddress'])->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/admin-managment-view', [AdminController::class, 'adminManagmentView'])->name('adminManagmentView');
+        Route::get('/user-managment', [AdminController::class, 'userManagment'])->name('userManagment');
+    });
 
     Route::middleware('guest:admin')->group(function () {
         Route::get('admin-register', [RegisteredAdminController::class, 'create'])

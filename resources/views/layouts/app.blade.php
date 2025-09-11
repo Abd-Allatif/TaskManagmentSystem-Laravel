@@ -30,8 +30,6 @@
                     <div class="content">
                         @yield('content')
                     </div>
-
-                    @include('layouts.footer')
                 </div>
             </div>
             <form id="logout-form" action="{{ route('admin-logout') }}" method="POST" style="display: none;">

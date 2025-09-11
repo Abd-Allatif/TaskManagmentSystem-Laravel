@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\enums\CreatedBy;
 use App\enums\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,7 @@ class Task extends Model
         'create_date' => 'datetime',
         'deadline' => 'date',
         'status' => Status::class,
+        'created_by' => CreatedBy::class,
         'end_flag' => 'boolean'
     ];
 

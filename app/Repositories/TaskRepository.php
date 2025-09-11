@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\enums\CreatedBy;
 use App\enums\Status;
 use App\Models\Task;
 use App\Models\User;
@@ -16,23 +17,9 @@ use Illuminate\Support\Str;
  */
 class TaskRepository
 {
-    public function getAllTasksWithUsers()
-    {
-        // Getting the Parent Task with Categories and thier Sub Tasks Using Scope
-        $tasks = Task::parent()->with(
-            [   
-                'users',
-                'categories',
-                'subTask'
-            ]
-        )->orderBy('deadline','desc')->get();
-
-        return $tasks;
-    }
-
+    // For Users
     public function getAllTasks($userId)
     {
-        // Getting the Parent Task with Categories and thier Sub Tasks Using Scope
         $tasks = Task::parent()->with(
             [
                 'categories',
@@ -44,6 +31,7 @@ class TaskRepository
         return $tasks->onEachSide(2);
     }
 
+    // For Users
     public function getTask($taskId)
     {
         $task = Task::parent()->with(['categories', 'subtask'])->where('id', $taskId)->first();
@@ -51,6 +39,7 @@ class TaskRepository
         return $task;
     }
 
+    // For Users
     public function searchTask($searchQuery, $userId)
     {
         $searchResult = Task::parent()->where('title', 'like', '%' . $searchQuery . '%')->forUser($userId)->orderBy('status', 'desc')->get();
@@ -58,6 +47,7 @@ class TaskRepository
         return $searchResult;
     }
 
+    // For Users
     public function createTask($data, $userId): void
     {
         DB::transaction(function () use ($data, $userId) {
@@ -67,6 +57,7 @@ class TaskRepository
                 'create_date' => Carbon::now(),
                 'deadline' => $data['deadline'],
                 'status' => $data['status'],
+                'created_by' => CreatedBy::User,
                 'end_flag' => false,
             ]);
 
@@ -80,6 +71,7 @@ class TaskRepository
         });
     }
 
+    // For Users
     public function updateTask($taskId, $data, $userId): void
     {
         DB::transaction(function () use ($taskId, $data, $userId) {
@@ -91,6 +83,7 @@ class TaskRepository
                 'create_date' => Carbon::now(),
                 'deadline' => $data['deadline'],
                 'status' => $data['status'],
+                'created_by' => CreatedBy::User,
                 'end_flag' => false,
             ]);
 
@@ -112,6 +105,7 @@ class TaskRepository
                         'create_date' => $task->create_date,
                         'deadline' => $task->deadline,
                         'status' => $task->status,
+                        'created_by' => CreatedBy::User,
                         'end_flag' => $task->end_flag,
                         'parentTask_id' => $taskId
                     ]);
@@ -120,6 +114,7 @@ class TaskRepository
         });
     }
 
+    // For Users
     public function createSubTask($taskId, $data): void
     {
         $task = Task::find($taskId);
@@ -131,10 +126,12 @@ class TaskRepository
             'deadline' => $task->deadline,
             'status' => $task->status,
             'end_flag' => $task->end_flag,
+            'created_by' => CreatedBy::User,
             'parentTask_id' => $taskId
         ]);
     }
 
+    // For Users
     public function startTask($taskId)
     {
         $task = Task::find($taskId);
@@ -144,6 +141,7 @@ class TaskRepository
         $task->save();
     }
 
+    // For Users
     public function endTask($taskId)
     {
         $task = Task::find($taskId);

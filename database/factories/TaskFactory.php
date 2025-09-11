@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\enums\CreatedBy;
 use App\enums\Status;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,6 +30,7 @@ class TaskFactory extends Factory
             'create_date'   => $created,
             'deadline'      => Carbon::instance($created)->addDays(fake()->numberBetween(1, 60))->toDateString(),
             'status'        => $status,
+            'created_by' => CreatedBy::User,
             'end_flag'      => $end,
             'parentTask_id' => null,
         ];
