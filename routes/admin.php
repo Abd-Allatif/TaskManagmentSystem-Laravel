@@ -4,14 +4,26 @@ use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\AdminAuth\PasswordResetController;
 use App\Http\Controllers\AdminAuth\RegisteredAdminController;
 use App\Http\Controllers\AdminAuth\VerificationController;
-use App\Http\Controllers\Managment\AdminController;
+use App\Http\Controllers\Managment\Admin\AdminController;
+use App\Http\Controllers\Managment\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => 'admin'], function () {
     Route::middleware(['auth:admin', 'verifyEmailAddress'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         Route::get('/admin-managment-view', [AdminController::class, 'adminManagmentView'])->name('adminManagmentView');
-        Route::get('/user-managment', [AdminController::class, 'userManagment'])->name('userManagment');
+
+        Route::group(["prefix" => 'user'], function () {
+            Route::get('/managment', [UserController::class, 'userManagment'])->name('userManagment');
+
+            Route::get('/create', [UserController::class, 'userCreateShow'])->name('userCreateShow');
+            Route::post('/create-user', [UserController::class, 'userCreate'])->name('userCreate');
+
+            Route::get('/edit/{userId}', [UserController::class, 'userEditShow'])->name('userEditShow');
+            Route::put('/edit-user/{userId}', [UserController::class, 'userEdit'])->name('userEdit');
+
+            Route::delete('/delete-user/{userId}', [UserController::class, 'deleteUser'])->name('deleteUser');
+        });
     });
 
     Route::middleware('guest:admin')->group(function () {

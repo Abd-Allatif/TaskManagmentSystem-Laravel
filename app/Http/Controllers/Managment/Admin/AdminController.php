@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Managment;
+namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Repositories\AdminRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -43,12 +42,5 @@ class AdminController extends Controller
         $deadlineTasks = $this->adminRepository->getDeadlineTasks();
 
         return view('pages.admin.adminManagmentView', ['users' => $users, 'tasks' => $tasks, 'categories' => $categories, 'deadlineTasks' => $deadlineTasks]);
-    }
-
-    public function userManagment()
-    {
-        $users = User::with('tasks')->get();
-        
-        return view('pages.admin.userManagment', ['users' => $users]);
     }
 }

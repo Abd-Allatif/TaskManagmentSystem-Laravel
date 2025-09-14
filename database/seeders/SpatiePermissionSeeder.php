@@ -19,65 +19,37 @@ class SpatiePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // $adminRole = Role::create(['name' => 'admin']);
-        // $userRole = Role::create(['name' => 'user']);
+        $ItRole = Role::create(['name' => 'It']);
+        $DesignerRole = Role::create(['name' => 'Graphic-Designers']);
 
-        // // Permissions
-        // // Tasks
-        // $viewTaskPermission = Permission::create(['name' => 'viewTask']);
-        // $createTaskPermission = Permission::create(['name' => 'createTask']);
-        // $editTaskPermission = Permission::create(['name' => 'editTask']);
-        // $deleteTaskPermission = Permission::create(['name' => 'deleteTask']);
+        $permissions = [
+            'viewTask',
+            'editTask',
+            'deleteTask',
+            'editStatusAfterComplete',
+            'editStatusAfterExpired',
+            'viewCategory',
+            'createCategory',
+            'editCategory',
+            'deleteCategory',
+            'assignToUserTask'
+        ];
 
-        // $assignToUserTaskPermission = Permission::create(['name' => 'assignToUserTask']);
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
-        // // Status
-        // $editStatusAfterComplete = Permission::create(['name' => 'editStatusAfterComplete']);
-        // $editStatusAfterExpired = Permission::create(['name' => 'editStatusAfterExpired']);
+        $ItRole->givePermissionTo(['viewTask','viewCategory']);
+        $DesignerRole->givePermissionTo(['viewTask','viewCategory']);
 
-        // // Category
-        // $viewCategoryPermission = Permission::create(['name' => 'viewCategory']);
-        // $createCategoryPermission = Permission::create(['name' => 'createCategory']);
-        // $editCategoryPermission = Permission::create(['name' => 'editCategory']);
-        // $deleteCategoryPermission = Permission::create(['name' => 'deleteCategory']);
+        $users = User::all();
 
-        // // Assign Permissions To Admin
-        // $adminRole->givePermissionTo('viewTask');
-        // $adminRole->givePermissionTo('createTask');
-        // $adminRole->givePermissionTo('editTask');
-        // $adminRole->givePermissionTo('deleteTask');
-
-        // $adminRole->givePermissionTo('assignToUserTask');
-
-        // $adminRole->givePermissionTo('editStatusAfterComplete');
-        // $adminRole->givePermissionTo('editStatusAfterExpired');
-
-        // $adminRole->givePermissionTo('viewCategory');
-        // $adminRole->givePermissionTo('createCategory');
-        // $adminRole->givePermissionTo('editCategory');
-        // $adminRole->givePermissionTo('deleteCategory');
-
-        // // Assign Permissions To User
-        // $userRole->givePermissionTo('viewTask');
-        // $userRole->givePermissionTo('createTask');
-        // $userRole->givePermissionTo('editTask');
-
-        // $userRole->givePermissionTo('viewCategory');
-
-        // $admin = User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@admin.co',
-        //     'password' => '123456789'
-        // ]);
-
-        // $admin->assignRole($adminRole);
-
-        // $user = User::factory()->create([
-        //     'name' => 'Abd',
-        //     'email' => 'abd@gmail.com',
-        //     'password' => '123456789'
-        // ]);
-
-        // $user->assignRole($userRole);
+        foreach ($users as $user) {
+            if (fake()->boolean(50)) {
+                $user->assignRole($ItRole);
+            } else {
+                $user->assignRole($DesignerRole);
+            }
+        }
     }
 }
