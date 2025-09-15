@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageSlug' => 'user-managment'])
+@extends('layouts.app', ['pageSlug' => 'roles'])
 
 @section('content')
     <div class="row">
@@ -7,15 +7,15 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h5 class="card-category">User Managment</h5>
-                            <h2 class="card-title">Users</h2>
-                            <a href="{{ route('userCreateShow') }}" class="button"> Create User</a>
+                            <h5 class="card-category">Roles Managment</h5>
+                            <h2 class="card-title">Roles</h2>
+                            <a href="{{route('roleCreatePage')}}" class="button"> Create Role</a>
                         </div>
                     </div>
                 </div>
                 <h4 style="color:aliceblue;margin-left:20px;margin-top: 10px;">{{ session('status') }}</h4>
                 <div class="card-body" id="card-content">
-                    @include('partials.users', ['users' => $users, 'pageSlug' => 'user-managment'])
+                    @include('partials.roles', ['roles' => $roles])
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 });
             });
         }
-        initSearch("usersTable", "userSearch");
+        initSearch("rolesTable", "rolesSearch");
 
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initSearch);
@@ -84,6 +84,5 @@
             initSearch();
         }
     </script> --}}
-
     @vite(['resources/js/app.js'])
 @endsection

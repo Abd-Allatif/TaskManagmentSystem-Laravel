@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Repositories\AdminRepository;
+use App\Repositories\Admin\UserRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
@@ -12,15 +12,11 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    protected TaskRepository $taskRepository;
-    protected CategoryRepository $categoryRepository;
-    protected AdminRepository $adminRepository;
+    protected UserRepository $userRepository;
 
-    public function __construct(TaskRepository $taskRepository, CategoryRepository $categoryRepository, AdminRepository $adminRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->taskRepository = $taskRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->adminRepository = $adminRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function userManagment()
@@ -47,7 +43,7 @@ class UserController extends Controller
             'roles.*' => ['nullable', 'string'],
         ]);
 
-        $this->adminRepository->createUser($validated);
+        $this->userRepository->createUser($validated);
 
         return redirect()->route('userManagment')->with('status', 'User Created Successfully');
     }
@@ -69,7 +65,7 @@ class UserController extends Controller
             'roles.*' => ['nullable', 'string'],
         ]);
 
-        $this->adminRepository->editUser($userId, $validated);
+        $this->userRepository->editUser($userId, $validated);
 
 
 

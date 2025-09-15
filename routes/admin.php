@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminAuth\PasswordResetController;
 use App\Http\Controllers\AdminAuth\RegisteredAdminController;
 use App\Http\Controllers\AdminAuth\VerificationController;
 use App\Http\Controllers\Managment\Admin\AdminController;
+use App\Http\Controllers\Managment\Admin\RolesController;
 use App\Http\Controllers\Managment\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +14,7 @@ Route::group(["prefix" => 'admin'], function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         Route::get('/admin-managment-view', [AdminController::class, 'adminManagmentView'])->name('adminManagmentView');
 
-        Route::group(["prefix" => 'user'], function () {
+        Route::group(['prefix' => 'user'], function () {
             Route::get('/managment', [UserController::class, 'userManagment'])->name('userManagment');
 
             Route::get('/create', [UserController::class, 'userCreateShow'])->name('userCreateShow');
@@ -23,6 +24,18 @@ Route::group(["prefix" => 'admin'], function () {
             Route::put('/edit-user/{userId}', [UserController::class, 'userEdit'])->name('userEdit');
 
             Route::delete('/delete-user/{userId}', [UserController::class, 'deleteUser'])->name('deleteUser');
+        });
+
+        Route::group(['prefix' => 'roles'], function () {
+            Route::get('managment',[RolesController::class,'rolesPage'])->name('rolesManagment');
+            
+            Route::get('/create',[RolesController::class,'showCreatePage'])->name('roleCreatePage');
+            Route::post('/create-role',[RolesController::class,'createRole'])->name('createRole');
+
+             Route::get('/edit/{roleId}',[RolesController::class,'showEditPage'])->name('roleEditPage');
+             Route::put('/edit-role/{roleId}',[RolesController::class,'editRole'])->name('editRole');
+
+             Route::delete('/delete-role/{roleId}',[RolesController::class,'deleteRole'])->name('deleteRole');
         });
     });
 

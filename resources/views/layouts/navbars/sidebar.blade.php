@@ -23,6 +23,12 @@
                     <p>User Management</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'roles') class="active " @endif>
+                <a href="{{route('rolesManagment')}}">
+                    <i class="tim-icons icon-lock-circle"></i>
+                    <p>Roles and Permissions</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="">
                     <i class="tim-icons icon-single-02"></i>
