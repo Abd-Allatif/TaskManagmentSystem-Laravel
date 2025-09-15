@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Managment\Admin\AdminCategoryController;
 use App\Mail\VerficationMail;
+use App\Repositories\Admin\AdminCategoryRepository;
+use App\Repositories\Admin\AdminTaskRepository;
 use App\Repositories\Admin\RolesRepository;
 use App\Repositories\Admin\UserRepository;
 use App\Repositories\AdminRepository;
@@ -37,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(RolesRepository::class,function($app){
             return new RolesRepository;
+        });
+
+        $this->app->bind(AdminCategoryRepository::class,function($app){
+            return new AdminCategoryRepository;
+        });
+        $this->app->bind(AdminTaskRepository::class,function($app){
+            return new AdminTaskRepository;
         });
     }
 

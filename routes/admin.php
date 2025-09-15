@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\AdminAuth\PasswordResetController;
 use App\Http\Controllers\AdminAuth\RegisteredAdminController;
 use App\Http\Controllers\AdminAuth\VerificationController;
+use App\Http\Controllers\Managment\Admin\AdminCategoryController;
 use App\Http\Controllers\Managment\Admin\AdminController;
 use App\Http\Controllers\Managment\Admin\RolesController;
 use App\Http\Controllers\Managment\Admin\UserController;
@@ -36,6 +37,18 @@ Route::group(["prefix" => 'admin'], function () {
              Route::put('/edit-role/{roleId}',[RolesController::class,'editRole'])->name('editRole');
 
              Route::delete('/delete-role/{roleId}',[RolesController::class,'deleteRole'])->name('deleteRole');
+        });
+
+         Route::group(['prefix' => 'categories'], function () {
+            Route::get('managment',[AdminCategoryController::class,'categoryPage'])->name('categoryManagment');
+            
+            Route::get('/create',[AdminCategoryController::class,'createCategoryPage'])->name('categoryCreatePage');
+            Route::post('/create-category',[AdminCategoryController::class,'createCategory'])->name('createCategory');
+
+             Route::get('/edit/{categoryId}',[AdminCategoryController::class,'editCategoryPage'])->name('categoryEditPage');
+             Route::put('/edit-category/{categoryId}',[AdminCategoryController::class,'editCategory'])->name('editcategory');
+
+             Route::delete('/delete-category/{categoryId}',[AdminCategoryController::class,'deleteCategory'])->name('deleteCategory');
         });
     });
 

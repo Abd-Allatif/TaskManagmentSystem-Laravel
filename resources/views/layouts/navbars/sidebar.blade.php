@@ -29,6 +29,12 @@
                     <p>Roles and Permissions</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'categories') class="active " @endif>
+                <a href="{{route('categoryManagment')}}">
+                    <i class="tim-icons icon-components"></i>
+                    <p>categories</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="">
                     <i class="tim-icons icon-single-02"></i>

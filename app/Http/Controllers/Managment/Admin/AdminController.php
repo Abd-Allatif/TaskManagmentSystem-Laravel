@@ -24,13 +24,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $users = User::with('tasks')->get();
-        $tasks = $this->adminRepository->getAllTasksWithUsers();
-        $categories = $this->categoryRepository->getAllCategoriesWithTasks();
-
-        $deadlineTasks = $this->adminRepository->getDeadlineTasks();
-
-        return view('dashboard', ['users' => $users, 'tasks' => $tasks, 'categories' => $categories, 'deadlineTasks' => $deadlineTasks]);
+        return view('dashboard');
     }
 
     public function adminManagmentView()

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageSlug' => 'edit-User'])
+@extends('layouts.app', ['pageSlug' => 'category'])
 
 @section('content')
     <div class="row">
@@ -7,39 +7,22 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h5 class="card-category">Create User</h5>
-                            @isset($user)
-                                <h2 class="card-title">Create New User</h2>
-                            @endisset
+                            <h5 class="card-category">Edit Category</h5>
+                            <h2 class="card-title">Edit {{$category->name}}</h2>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body" id="card-content">
-                    <form action="{{route('userCreate')}}" method="POST">
+                    <form action="{{ route('editcategory',$category->id) }}" method="POST">
                         @csrf
-
-                        <label for="name">Name:</label>
-                        <input type="text" class="EditInput" name="name">
+                        @method('PUT')
+                        <label for="name">Category Name:</label>
+                        <input type="text" class="EditInput" name="name" value="{{$category->name}}">
                         <br><br>
-                        <label for="email">Email:</label>
-                        <input type="text" class="EditInput" name="email">
+                        <label for="color">Color</label>
+                        <input type="color" class="checkboxes" name="color" value="{{$category->color}}">
                         <br><br>
-                        <label for="password">Password:</label>
-                        <input type="password" class="EditInput" name="password">
-
-                        <div class="Roles">
-                            <h4>Roles</h4>
-                            <ul>
-                                @foreach ($roles as $role)
-                                    <li>
-                                        <input type="radio" name="roles[]" value="{{ $role->name }}">
-                                        <label for="role-{{ $role->id }}">{{ $role->name }}</label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        
                         <input type="submit" class="button">
                     </form>
                 </div>
@@ -70,6 +53,12 @@
         width: 250px;
 
         margin-left: 20px;
+    }
+
+    .checkboxes {
+        transform: scale(1.3);
+        margin-left: 15px;
+        align-self: center;
     }
 
     .Roles {

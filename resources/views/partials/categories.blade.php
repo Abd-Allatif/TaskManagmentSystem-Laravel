@@ -7,6 +7,12 @@
             <th>Name</th>
             <th>Color</th>
             <th class="text-center">Tasks Count</th>
+            @isset($pageSlug)
+                @if ($pageSlug == 'category')
+                    <th>Edit</th>
+                    <th>Delete</th>
+                @endif
+            @endisset
         </tr>
     </thead>
     <tbody>
@@ -19,11 +25,28 @@
                     </div>
                 </td>
                 <td class="text-center">{{ $category->tasks->count() }}</td>
+                @isset($pageSlug)
+                    @if ($pageSlug == 'category')
+                        <td> <a href="{{route('categoryEditPage',$category->id)}}" id="pencilIcon" class="tim-icons icon-pencil"></a></td>
+                        <td>
+                            <form action="{{route('deleteCategory',$category->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
+                            </form>
+                        </td>
+                    @endif
+                @endisset
             </tr>
         @endforeach
     </tbody>
 </table>
+
 <style>
+    .form{
+        align-self: center;
+        justify-self: center;
+    }
     .SearchInput {
         border-right: 1px solid #0099ff;
         border-left: 1px solid #0099ff;
@@ -60,5 +83,33 @@
 
         margin-left: 5px;
         margin-top: 5px;
+    }
+
+    #pencilIcon {
+        cursor: pointer;
+    }
+
+    #pencilIcon {
+        color: honeydew;
+    }
+
+    #pencilIcon:hover {
+        color: #0099ff;
+    }
+
+    .delete {
+        background: none;
+        border: none;
+
+        cursor: pointer;
+    }
+
+    #basketIcon {
+        color: honeydew;
+        cursor: pointer;
+    }
+
+    #basketIcon:hover {
+        color: red;
     }
 </style>

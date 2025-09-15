@@ -31,7 +31,7 @@
                                 <ul>
                                     @foreach ($roles as $role)
                                         <li>
-                                            <input type="checkbox" name="roles[]" value="{{ $role->name }}"
+                                            <input type="radio" name="roles[]" value="{{ $role->name }}"
                                                 {{ in_array($role->id, $user->roles->pluck('id')->toArray()) ? 'checked' : '' }}>
                                             <label for="role-{{ $role->id }}">{{ $role->name }}</label>
                                         </li>
