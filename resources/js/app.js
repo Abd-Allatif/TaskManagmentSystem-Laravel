@@ -24,7 +24,7 @@ function initSearch(tableId, inputId) {
 }
 
 initSearch("rolesTable", "rolesSearch");
-// initSearch("tasksTable", "taskSearch");
+initSearch("tasksTable", "taskSearch");
 initSearch("categoriesTable", "categorySearch");
 initSearch("usersTable", "userSearch");
 

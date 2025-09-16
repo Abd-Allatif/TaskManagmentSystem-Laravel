@@ -35,6 +35,12 @@
                     <p>categories</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'tasks') class="active " @endif>
+                <a href="{{route('taskManagment')}}">
+                    <i class="tim-icons icon-notes"></i>
+                    <p>Tasks</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'profile') class="active " @endif>
                 <a href="">
                     <i class="tim-icons icon-single-02"></i>

@@ -15,6 +15,12 @@
                 <th>Category</th>
                 <th>Sub Tasks</th>
                 <th>Users</th>
+                @isset($pageSlug)
+                    @if ($pageSlug == 'tasks')
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    @endif
+                @endisset
             </tr>
         </thead>
         <tbody>
@@ -73,6 +79,20 @@
                             <h5>-({{ $user->name }})</h5>
                         @endforeach
                     </td>
+                    @isset($pageSlug)
+                        @if ($pageSlug == 'tasks')
+                            <td> <a href="{{ route('taskEditPage', $task->id) }}" id="pencilIcon"
+                                    class="tim-icons icon-pencil"></a></td>
+                            <td>
+                                <form action="{{ route('deleteTask', $task->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="delete"><span id="basketIcon"
+                                            class="tim-icons icon-basket-simple"></button>
+                                </form>
+                            </td>
+                        @endif
+                    @endisset
                 </tr>
             @endforeach
         </tbody>
@@ -161,5 +181,33 @@
 
         margin-top: 15px;
         margin-left: 5px;
+    }
+
+    #pencilIcon {
+        cursor: pointer;
+    }
+
+    #pencilIcon {
+        color: honeydew;
+    }
+
+    #pencilIcon:hover {
+        color: #0099ff;
+    }
+
+    .delete {
+        background: none;
+        border: none;
+
+        cursor: pointer;
+    }
+
+    #basketIcon {
+        color: honeydew;
+        cursor: pointer;
+    }
+
+    #basketIcon:hover {
+        color: red;
     }
 </style>

@@ -23,7 +23,7 @@
                         <input type="text" class="EditInput" name="name">
                         <br><br>
                         <label for="name">Is Admin:</label>
-                        <input type="checkbox" class="checkboxes" name="isAdmin" value="admin">
+                        <input type="checkbox" class="checkboxes" name="isAdmin" value="1">
                         <br><br>
 
                         <div class="Roles">

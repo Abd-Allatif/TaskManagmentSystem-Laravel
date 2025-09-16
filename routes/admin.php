@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminAuth\RegisteredAdminController;
 use App\Http\Controllers\AdminAuth\VerificationController;
 use App\Http\Controllers\Managment\Admin\AdminCategoryController;
 use App\Http\Controllers\Managment\Admin\AdminController;
+use App\Http\Controllers\Managment\Admin\AdminTaskController;
 use App\Http\Controllers\Managment\Admin\RolesController;
 use App\Http\Controllers\Managment\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -28,27 +29,39 @@ Route::group(["prefix" => 'admin'], function () {
         });
 
         Route::group(['prefix' => 'roles'], function () {
-            Route::get('managment',[RolesController::class,'rolesPage'])->name('rolesManagment');
-            
-            Route::get('/create',[RolesController::class,'showCreatePage'])->name('roleCreatePage');
-            Route::post('/create-role',[RolesController::class,'createRole'])->name('createRole');
+            Route::get('managment', [RolesController::class, 'rolesPage'])->name('rolesManagment');
 
-             Route::get('/edit/{roleId}',[RolesController::class,'showEditPage'])->name('roleEditPage');
-             Route::put('/edit-role/{roleId}',[RolesController::class,'editRole'])->name('editRole');
+            Route::get('/create', [RolesController::class, 'showCreatePage'])->name('roleCreatePage');
+            Route::post('/create-role', [RolesController::class, 'createRole'])->name('createRole');
 
-             Route::delete('/delete-role/{roleId}',[RolesController::class,'deleteRole'])->name('deleteRole');
+            Route::get('/edit/{roleId}', [RolesController::class, 'showEditPage'])->name('roleEditPage');
+            Route::put('/edit-role/{roleId}', [RolesController::class, 'editRole'])->name('editRole');
+
+            Route::delete('/delete-role/{roleId}', [RolesController::class, 'deleteRole'])->name('deleteRole');
         });
 
-         Route::group(['prefix' => 'categories'], function () {
-            Route::get('managment',[AdminCategoryController::class,'categoryPage'])->name('categoryManagment');
-            
-            Route::get('/create',[AdminCategoryController::class,'createCategoryPage'])->name('categoryCreatePage');
-            Route::post('/create-category',[AdminCategoryController::class,'createCategory'])->name('createCategory');
+        Route::group(['prefix' => 'categories'], function () {
+            Route::get('managment', [AdminCategoryController::class, 'categoryPage'])->name('categoryManagment');
 
-             Route::get('/edit/{categoryId}',[AdminCategoryController::class,'editCategoryPage'])->name('categoryEditPage');
-             Route::put('/edit-category/{categoryId}',[AdminCategoryController::class,'editCategory'])->name('editcategory');
+            Route::get('/create', [AdminCategoryController::class, 'createCategoryPage'])->name('categoryCreatePage');
+            Route::post('/create-category', [AdminCategoryController::class, 'createCategory'])->name('createCategory');
 
-             Route::delete('/delete-category/{categoryId}',[AdminCategoryController::class,'deleteCategory'])->name('deleteCategory');
+            Route::get('/edit/{categoryId}', [AdminCategoryController::class, 'editCategoryPage'])->name('categoryEditPage');
+            Route::put('/edit-category/{categoryId}', [AdminCategoryController::class, 'editCategory'])->name('editcategory');
+
+            Route::delete('/delete-category/{categoryId}', [AdminCategoryController::class, 'deleteCategory'])->name('deleteCategory');
+        });
+
+        Route::group(['prefix' => 'tasks'], function () {
+            Route::get('managment', [AdminTaskController::class,'taskPage'])->name('taskManagment');
+
+            Route::get('/create', [AdminTaskController::class,'createTaskPage'])->name('taskCreatePage');
+            Route::post('/create-task', [AdminTaskController::class,'createTask'])->name('createTask');
+
+            Route::get('/edit/{taslId}', [AdminTaskController::class,'editTaskPage'])->name('taskEditPage');
+            Route::put('/edit-task/{taskId}', [AdminTaskController::class,'editTask'])->name('editTaskAdmin');
+
+            Route::delete('/delete-task/{taskId}', [AdminTaskController::class,'deleteTask'])->name('deleteTask');
         });
     });
 

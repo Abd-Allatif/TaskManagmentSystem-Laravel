@@ -37,7 +37,7 @@ class RolesController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string'],
-            'isAdmin' => ['nullable', 'string'],
+            'isAdmin' => ['nullable', 'boolean'],
             'permissions' => ['array', 'nullable'],
             'permissions.*' => ['string', 'nullable']
         ]);
@@ -62,7 +62,7 @@ class RolesController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string'],
-            'isAdmin' => ['nullable', 'string'],
+            'isAdmin' => ['nullable', 'boolean'],
             'permissions' => ['array', 'nullable'],
             'permissions.*' => ['string', 'nullable']
         ]);

@@ -30,18 +30,18 @@ class RolesRepository
     public function createRole($data)
     {
         DB::transaction(function () use ($data) {
-            if (isset($data['isAdmin'])) {
+            if (isset($data['isAdmin']) && $data['isAdmin']) {
                 $role = Role::create([
                     'name' => $data['name'],
-                    'guard_name' => $data['isAdmin']
+                    'guard_name' => 'admin'
                 ]);
-                $role->givePermissionTo($data['permissions']);
+                isset($data['permissions']) ? $role->syncPermissions($data['permissions']) : null;
             } else {
                 $role = Role::create([
                     'name' => $data['name'],
                     'guard_name' => 'web'
                 ]);
-                $role->givePermissionTo($data['permissions']);
+                isset($data['permissions']) ? $role->syncPermissions($data['permissions']) : null;
             }
         });
     }
@@ -49,25 +49,27 @@ class RolesRepository
     public function editRole($data, $roleId)
     {
         DB::transaction(function () use ($data, $roleId) {
-            if (isset($data['isAdmin'])) {
-                $role = Role::where('id', $roleId)->where('guard_name', $data['isAdmin'])->first();
+            if (isset($data['isAdmin']) && $data['isAdmin']) {
+                $role = Role::where('id', $roleId)->first();
                 $role->update([
                     'name' => $data['name'],
-                    'guard_name' => $data['isAdmin']
+                    'guard_name' => 'admin'
                 ]);
-                $role->givePermissionTo($data['permissions']);
+
+                isset($data['permissions']) ? $role->syncPermissions($data['permissions']) :  $role->syncPermissions([]);
             } else {
-                $role = Role::where('id', $roleId)->where('guard_name', 'web')->first();
+                $role = Role::where('id', $roleId)->first();
                 $role->update([
                     'name' => $data['name'],
                     'guard_name' => 'web'
                 ]);
-                $role->givePermissionTo($data['permissions']);
+
+                isset($data['permissions']) ? $role->syncPermissions($data['permissions']) : $role->syncPermissions([]);
             }
         });
     }
 
-    public function deleteRole($roleId,$guard_name)
+    public function deleteRole($roleId, $guard_name)
     {
         $role = Role::where('id', $roleId)->where('guard_name', $guard_name)->first();
         $role->delete();

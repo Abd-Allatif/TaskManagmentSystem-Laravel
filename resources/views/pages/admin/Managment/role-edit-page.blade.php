@@ -23,7 +23,7 @@
                             <input type="text" class="EditInput" value="{{ $role->name }}" name="name">
                             <br><br>
                             <label for="name">Is Admin:</label>
-                            <input type="checkbox" class="checkboxes" name="isAdmin" value="admin" {{$role->guard_name == 'admin' ? 'checked' : ''}}>
+                            <input type="checkbox" class="checkboxes" name="isAdmin" value="1" {{$role->guard_name == 'admin' ? 'checked' : ''}}>
                             <br><br>
 
                             <div class="Roles">
