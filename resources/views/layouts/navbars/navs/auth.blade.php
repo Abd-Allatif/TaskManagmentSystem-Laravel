@@ -2,7 +2,8 @@
     <div class="container-fluid">
 
         <div class="navbar-wrapper">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">{{ $page ?? __('Task Managment Dashboard') }}</a>
+            <a class="navbar-brand"
+                @can('View DashBoard') href="{{ route('dashboard') }}" @endcan>{{ $page ?? __('Task Managment Dashboard') }}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navigation">
@@ -37,44 +38,43 @@
 </nav>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const dropdowns = document.querySelectorAll(".dropdown");
+    document.addEventListener("DOMContentLoaded", function() {
+        const dropdowns = document.querySelectorAll(".dropdown");
 
-  dropdowns.forEach(dropdown => {
-    const trigger = dropdown.querySelector(".dropdown-toggle");
+        dropdowns.forEach(dropdown => {
+            const trigger = dropdown.querySelector(".dropdown-toggle");
 
-    trigger.addEventListener("click", function (e) {
-      e.preventDefault();
+            trigger.addEventListener("click", function(e) {
+                e.preventDefault();
 
-      // Close all other dropdowns first
-      document.querySelectorAll(".dropdown.show").forEach(openDropdown => {
-        if (openDropdown !== dropdown) {
-          openDropdown.classList.remove("show");
-        }
-      });
+                // Close all other dropdowns first
+                document.querySelectorAll(".dropdown.show").forEach(openDropdown => {
+                    if (openDropdown !== dropdown) {
+                        openDropdown.classList.remove("show");
+                    }
+                });
 
-      // Toggle this one
-      dropdown.classList.toggle("show");
+                // Toggle this one
+                dropdown.classList.toggle("show");
+            });
+        });
+
+        // Close when clicking outside
+        document.addEventListener("click", function(e) {
+            document.querySelectorAll(".dropdown.show").forEach(openDropdown => {
+                if (!openDropdown.contains(e.target)) {
+                    openDropdown.classList.remove("show");
+                }
+            });
+        });
+
+        // Optional: close on Escape key
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") {
+                document.querySelectorAll(".dropdown.show").forEach(openDropdown => {
+                    openDropdown.classList.remove("show");
+                });
+            }
+        });
     });
-  });
-
-  // Close when clicking outside
-  document.addEventListener("click", function (e) {
-    document.querySelectorAll(".dropdown.show").forEach(openDropdown => {
-      if (!openDropdown.contains(e.target)) {
-        openDropdown.classList.remove("show");
-      }
-    });
-  });
-
-  // Optional: close on Escape key
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      document.querySelectorAll(".dropdown.show").forEach(openDropdown => {
-        openDropdown.classList.remove("show");
-      });
-    }
-  });
-});
 </script>
-

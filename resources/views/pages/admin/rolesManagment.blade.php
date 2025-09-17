@@ -9,7 +9,9 @@
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Roles Managment</h5>
                             <h2 class="card-title">Roles</h2>
-                            <a href="{{route('roleCreatePage')}}" class="button"> Create Role</a>
+                            @can('Create Role')
+                                <a href="{{ route('roleCreatePage') }}" class="button"> Create Role</a>
+                            @endcan
                         </div>
                     </div>
                 </div>

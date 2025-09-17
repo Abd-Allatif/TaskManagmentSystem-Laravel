@@ -10,8 +10,12 @@
             <th class="text-center">Tasks Count</th>
             @isset($pageSlug)
                 @if ($pageSlug == 'user-managment')
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    @can('Edit User')
+                        <th>Edit</th>
+                    @endcan
+                    @can('Delete User')
+                        <th>Delete</th>
+                    @endcan
                 @endif
             @endisset
         </tr>
@@ -31,15 +35,20 @@
                 <td class="text-center">{{ $user->tasks->count() }}</td>
                 @isset($pageSlug)
                     @if ($pageSlug == 'user-managment')
-                        <td> <a href="{{ route('userEditShow', $user->id) }}" id="pencilIcon"
-                                class="tim-icons icon-pencil"></a></td>
-                        <td>
-                            <form action="{{ route('deleteUser', $user->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
-                            </form>
-                        </td>
+                        @can('Edit User')
+                            <td> <a href="{{ route('userEditShow', $user->id) }}" id="pencilIcon"
+                                    class="tim-icons icon-pencil"></a>
+                            </td>
+                        @endcan
+                        @can('Delete User')
+                            <td>
+                                <form action="{{ route('deleteUser', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
+                                </form>
+                            </td>
+                        @endcan
                     @endif
                 @endisset
             </tr>

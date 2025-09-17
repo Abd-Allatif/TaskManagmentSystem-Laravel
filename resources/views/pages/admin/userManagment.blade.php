@@ -9,7 +9,9 @@
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">User Managment</h5>
                             <h2 class="card-title">Users</h2>
-                            <a href="{{ route('userCreateShow') }}" class="button"> Create User</a>
+                            @can('Create User')
+                                <a href="{{ route('userCreateShow') }}" class="button"> Create User</a>
+                            @endcan
                         </div>
                     </div>
                 </div>

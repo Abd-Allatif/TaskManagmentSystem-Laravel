@@ -9,7 +9,9 @@
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Admin Managment</h5>
                             <h2 class="card-title">Admins</h2>
-                            <a href="{{ route('adminCreatePage') }}" class="button">Create Admin</a>
+                            @can('Create Admins')
+                                <a href="{{ route('adminCreatePage') }}" class="button">Create Admin</a>
+                            @endcan
                         </div>
                     </div>
                 </div>

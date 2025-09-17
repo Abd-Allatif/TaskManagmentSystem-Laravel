@@ -16,7 +16,7 @@ class RolesRepository
 {
     public function getRoles()
     {
-        $roles = Role::withCount('users')->with(['permissions'])->get();
+        $roles = Role::withCount('users')->with(['permissions'])->orderBy('guard_name','desc')->get();
 
         return $roles;
     }

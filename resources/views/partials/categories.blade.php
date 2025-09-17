@@ -9,8 +9,12 @@
             <th class="text-center">Tasks Count</th>
             @isset($pageSlug)
                 @if ($pageSlug == 'category')
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    @can('Edit Category')
+                        <th>Edit</th>
+                    @endcan
+                    @can('Delete Category')
+                        <th>Delete</th>
+                    @endcan
                 @endif
             @endisset
         </tr>
@@ -27,14 +31,20 @@
                 <td class="text-center">{{ $category->tasks->count() }}</td>
                 @isset($pageSlug)
                     @if ($pageSlug == 'category')
-                        <td> <a href="{{route('categoryEditPage',$category->id)}}" id="pencilIcon" class="tim-icons icon-pencil"></a></td>
-                        <td>
-                            <form action="{{route('deleteCategory',$category->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
-                            </form>
-                        </td>
+                        @can('Edit Category')
+                            <td> <a href="{{ route('categoryEditPage', $category->id) }}" id="pencilIcon"
+                                    class="tim-icons icon-pencil"></a>
+                            </td>
+                        @endcan
+                        @can('Delete Category')
+                            <td>
+                                <form action="{{ route('deleteCategory', $category->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
+                                </form>
+                            </td>
+                        @endcan
                     @endif
                 @endisset
             </tr>
@@ -43,10 +53,11 @@
 </table>
 
 <style>
-    .form{
+    .form {
         align-self: center;
         justify-self: center;
     }
+
     .SearchInput {
         border-right: 1px solid #0099ff;
         border-left: 1px solid #0099ff;

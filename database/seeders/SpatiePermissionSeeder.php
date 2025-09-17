@@ -19,23 +19,36 @@ class SpatiePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // $permissions = [
+        //     'view Task',
+        //     'Create Task',
+        //     'Edit Task',
+        //     'Delete Task',
+        //     'Edit Status After Complete',
+        //     'Edit Status After Expired',
+        //     'View Category',
+        //     'Create Category',
+        //     'Edit Category',
+        //     'Delete Category',
+        //     'Assign Task To User',
+        //     'View Admins',
+        //     'Create Admins',
+        //     'Edit Admins',
+        //     'Delete Admins',
+        //     'View DashBoard',
+        // ];
+        // $permissions = [
+        //     'View User',
+        //     'Create User',
+        //     'Edit User',
+        //     'Delete User',
+        // ];
+
         $permissions = [
-            'view Task',
-            'Create Task',
-            'Edit Task',
-            'Delete Task',
-            'Edit Status After Complete',
-            'Edit Status After Expired',
-            'View Category',
-            'Create Category',
-            'Edit Category',
-            'Delete Category',
-            'Assign Task To User',
-            'View Admins',
-            'Create Admins',
-            'Edit Admins',
-            'Delete Admins',
-            'View DashBoard',
+            'View Role',
+            'Create Role',
+            'Edit Role',
+            'Delete Role',
         ];
 
         foreach ($permissions as $permission) {

@@ -9,8 +9,12 @@
             <th>Roles</th>
             @isset($pageSlug)
                 @if ($pageSlug == 'admins')
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    @can('Edit Admins')
+                        <th>Edit</th>
+                    @endcan
+                    @can('Delete Admins')
+                        <th>Delete</th>
+                    @endcan
                 @endif
             @endisset
         </tr>
@@ -29,15 +33,20 @@
                 </td>
                 @isset($pageSlug)
                     @if ($pageSlug == 'admins')
-                        <td> <a href="{{ route('adminEditPage', $admin->id) }}" id="pencilIcon"
-                                class="tim-icons icon-pencil"></a></td>
-                        <td>
-                            <form action="{{ route('deleteAdmin', $admin->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
-                            </form>
-                        </td>
+                        @can('Edit Admins')
+                            <td> <a href="{{ route('adminEditPage', $admin->id) }}" id="pencilIcon"
+                                    class="tim-icons icon-pencil"></a>
+                            </td>
+                        @endcan
+                        @can('Delete Admins')
+                            <td>
+                                <form action="{{ route('deleteAdmin', $admin->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
+                                </form>
+                            </td>
+                        @endcan
                     @endif
                 @endisset
             </tr>

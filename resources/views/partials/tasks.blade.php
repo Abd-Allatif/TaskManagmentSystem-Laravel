@@ -17,8 +17,12 @@
                 <th>Users</th>
                 @isset($pageSlug)
                     @if ($pageSlug == 'tasks')
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        @can('Edit Task')
+                            <th>Edit</th>
+                        @endcan
+                        @can('Delete Task')
+                            <th>Delete</th>
+                        @endcan
                     @endif
                 @endisset
             </tr>
@@ -81,16 +85,21 @@
                     </td>
                     @isset($pageSlug)
                         @if ($pageSlug == 'tasks')
-                            <td> <a href="{{ route('taskEditPage', $task->id) }}" id="pencilIcon"
-                                    class="tim-icons icon-pencil"></a></td>
-                            <td>
-                                <form action="{{ route('deleteTask', $task->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="delete"><span id="basketIcon"
-                                            class="tim-icons icon-basket-simple"></button>
-                                </form>
-                            </td>
+                            @can('Edit Task')
+                                <td> <a href="{{ route('taskEditPage', $task->id) }}" id="pencilIcon"
+                                        class="tim-icons icon-pencil"></a>
+                                </td>
+                            @endcan
+                            @can('Delete Task')
+                                <td>
+                                    <form action="{{ route('deleteTask', $task->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="delete"><span id="basketIcon"
+                                                class="tim-icons icon-basket-simple"></button>
+                                    </form>
+                                </td>
+                            @endcan
                         @endif
                     @endisset
                 </tr>

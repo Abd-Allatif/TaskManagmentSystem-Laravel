@@ -8,8 +8,12 @@
             <th>Permissions</th>
             <th>Guard</th>
             <th class="text-center">Users Count</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            @can('Edit Role')
+                <th>Edit</th>
+            @endcan
+            @can('Delete Role')
+                <th>Delete</th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -21,18 +25,23 @@
                         <h5>{{ $permission->name }}</h5>
                     @endforeach
                 </td>
-                <td>{{$role->guard_name}}</td>
+                <td>{{ $role->guard_name }}</td>
                 <td class="text-center">{{ $role->users->count() }}</td>
-                <td> <a href="{{route('roleEditPage',$role->id)}}" id="pencilIcon" class="tim-icons icon-pencil"></a>
-                </td>
-                <td>
-                    <form action="{{route('deleteRole',$role->id)}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="guard" value="{{$role->guard_name}}">
-                        <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
-                    </form>
-                </td>
+                @can('Edit Role')
+                    <td>
+                        <a href="{{ route('roleEditPage', $role->id) }}" id="pencilIcon" class="tim-icons icon-pencil"></a>
+                    </td>
+                @endcan
+                @can('Delete Role')
+                    <td>
+                        <form action="{{ route('deleteRole', $role->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="guard" value="{{ $role->guard_name }}">
+                            <button class="delete"><span id="basketIcon" class="tim-icons icon-basket-simple"></button>
+                        </form>
+                    </td>
+                @endcan
             </tr>
         @endforeach
     </tbody>

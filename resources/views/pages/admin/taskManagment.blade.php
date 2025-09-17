@@ -9,13 +9,15 @@
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Tasks Managment</h5>
                             <h2 class="card-title">Tasks</h2>
-                            <a href="{{route('taskCreatePage')}}" class="button"> Create Task</a>
+                            @can('Create Task')
+                                <a href="{{ route('taskCreatePage') }}" class="button"> Create Task</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
                 <h4 style="color:aliceblue;margin-left:20px;margin-top: 10px;">{{ session('status') }}</h4>
                 <div class="card-body" id="card-content">
-                    @include('partials.tasks', ['tasks' => $tasks,'pageSlug' => 'tasks'])
+                    @include('partials.tasks', ['tasks' => $tasks, 'pageSlug' => 'tasks'])
                 </div>
             </div>
         </div>
