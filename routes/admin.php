@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminAuth\VerificationController;
 use App\Http\Controllers\Managment\Admin\AdminCategoryController;
 use App\Http\Controllers\Managment\Admin\AdminController;
 use App\Http\Controllers\Managment\Admin\AdminManagmentController;
+use App\Http\Controllers\Managment\Admin\AdminProfileController;
 use App\Http\Controllers\Managment\Admin\AdminTaskController;
 use App\Http\Controllers\Managment\Admin\RolesController;
 use App\Http\Controllers\Managment\Admin\UserController;
@@ -74,6 +75,12 @@ Route::group(["prefix" => 'admin'], function () {
             Route::put('/edit-admin/{adminId}', [AdminManagmentController::class, 'editAdmin'])->name('editAdmin');
 
             Route::delete('/delete-admin/{adminId}', [AdminManagmentController::class, 'deleteAdmin'])->name('deleteAdmin');
+        });
+
+        Route::group(['prefix' => 'profile'],function (){
+            Route::get('my-profile',[AdminProfileController::class,'profilePage'])->name('adminProfile');
+
+            Route::put('edit-admin-profile',[AdminProfileController::class,'editProfile'])->name('edit.adminProfile');
         });
     });
 

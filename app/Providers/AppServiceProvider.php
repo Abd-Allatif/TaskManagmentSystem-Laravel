@@ -15,6 +15,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Repositories\Admin\AdminManagmentRepository;
+use App\Repositories\Admin\AdminProfileRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,6 +58,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(AdminManagmentRepository::class,function($app){
             return new AdminManagmentRepository;
+        });
+
+        $this->app->bind(AdminProfileRepository::class,function($app){
+            return new AdminProfileRepository;
         });
     }
 
