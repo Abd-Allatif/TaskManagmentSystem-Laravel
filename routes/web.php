@@ -19,7 +19,7 @@ Route::middleware(['auth', 'verifyEmailAddress'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'verifyEmailAddress'])->group(function () {
+Route::middleware(['auth:web', 'verifyEmailAddress'])->group(function () {
     Route::get('/tasks', [TaskController::class, 'getTasks'])->name('getAllTasks');
     Route::post('/tasks/searchTask', [TaskController::class, 'searchTask'])->name('searchTask');
 

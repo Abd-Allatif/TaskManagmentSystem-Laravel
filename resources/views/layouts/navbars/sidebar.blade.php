@@ -11,12 +11,6 @@
                     <p>DashBoard</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'admin-managment-view') class="active " @endif>
-                <a href="{{route('adminManagmentView')}}">
-                    <i class="tim-icons icon-paper"></i>
-                    <p>Admin Management View</p>
-                </a>
-            </li>
             <li @if ($pageSlug == 'user-managment') class="active " @endif>
                 <a href="{{route('userManagment')}}">
                     <i class="tim-icons icon-bullet-list-67"></i>
@@ -41,10 +35,10 @@
                     <p>Tasks</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'profile') class="active " @endif>
-                <a href="">
+            <li @if ($pageSlug == 'admins') class="active " @endif>
+                <a href="{{route('adminManagment')}}">
                     <i class="tim-icons icon-single-02"></i>
-                    <p>Admin Profile</p>
+                    <p>Admins</p>
                 </a>
             </li>
             </li>

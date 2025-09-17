@@ -27,6 +27,7 @@ initSearch("rolesTable", "rolesSearch");
 initSearch("tasksTable", "taskSearch");
 initSearch("categoriesTable", "categorySearch");
 initSearch("usersTable", "userSearch");
+initSearch("adminTable", "adminSearch");
 
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initSearch);

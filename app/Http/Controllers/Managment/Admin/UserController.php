@@ -21,14 +21,14 @@ class UserController extends Controller
 
     public function userManagment()
     {
-        $users = User::with(['tasks', 'roles', 'permissions'])->get();
+        $users = $this->userRepository->getAllUsersWithRoles();
 
         return view('pages.admin.userManagment', ['users' => $users]);
     }
 
     public function userCreateShow()
     {
-        $roles = Role::all();
+       $roles = $this->userRepository->getWebRoles();
 
         return view('pages.admin.Managment.user-create-page', ['roles' => $roles]);
     }
@@ -39,7 +39,7 @@ class UserController extends Controller
             'name' => ['required', 'string'],
             'email' => ['required', 'email'],
             'password' => ['required', 'string', 'min:8'],
-            'roles' => ['required', 'array'],
+            'roles' => ['nullable', 'array'],
             'roles.*' => ['nullable', 'string'],
         ]);
 
@@ -50,8 +50,8 @@ class UserController extends Controller
 
     public function userEditShow($userId)
     {
-        $users = User::with(['roles', 'permissions'])->find($userId);
-        $roles = Role::all();
+        $users = $this->userRepository->getUserWithRole($userId);
+        $roles = $this->userRepository->getWebRoles();
         // return response()->json($users);
         return view('pages.admin.Managment.user-edit-page', ['user' => $users, 'roles' => $roles]);
     }
@@ -61,7 +61,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'roles' => ['required', 'array'],
+            'roles' => ['nullable', 'array'],
             'roles.*' => ['nullable', 'string'],
         ]);
 

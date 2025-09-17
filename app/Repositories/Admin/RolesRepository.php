@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 //use Your Model
@@ -25,6 +26,20 @@ class RolesRepository
         $role = Role::with(['permissions'])->find($roleId);
 
         return $role;
+    }
+
+    public function getWebPermissions()
+    {
+        $permissions = Permission::where('guard_name','web')->get();
+
+        return $permissions;
+    }
+
+    public function getAdminPermissions()
+    {
+         $permissions = Permission::where('guard_name','admin')->get();
+
+        return $permissions;
     }
 
     public function createRole($data)

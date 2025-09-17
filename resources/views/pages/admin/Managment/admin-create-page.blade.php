@@ -7,43 +7,32 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h5 class="card-category">Create Role</h5>
-                            @isset($user)
-                                <h2 class="card-title">Create New Role</h2>
-                            @endisset
+                            <h5 class="card-category">Create Admin</h5>
+                            <h2 class="card-title">Create New Admin</h2>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body" id="card-content">
-                    <form action="{{ route('createRole') }}" method="POST">
+                    <form action="{{ route('createAdmin') }}" method="POST">
                         @csrf
 
-                        <label for="name">Role Name:</label>
+                        <label for="name">Name:</label>
                         <input type="text" class="EditInput" name="name">
                         <br><br>
-                        <label for="name">Is Admin:</label>
-                        <input type="checkbox" class="checkboxes" name="isAdmin" id="isAdmin" value="1">
+                        <label for="email">Email:</label>
+                        <input type="text" class="EditInput" name="email">
                         <br><br>
+                        <label for="password">Password:</label>
+                        <input type="password" class="EditInput" name="password">
 
                         <div class="Roles">
-                            <h4>Permissions</h4>
-                            <ul id="web-permissions">
-                                @foreach ($webPermissions as $permission)
+                            <h4>Roles</h4>
+                            <ul>
+                                @foreach ($roles as $role)
                                     <li>
-                                        <input class="checkboxes" type="checkbox" name="permissions[]"
-                                            value="{{ $permission->name }}">
-                                        <label for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                            <ul id="admin-permissions" style="display: none;">
-                                @foreach ($adminPermissions as $permission)
-                                    <li>
-                                        <input class="checkboxes" type="checkbox" name="permissions[]"
-                                            value="{{ $permission->name }}">
-                                        <label for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
+                                        <input type="radio" name="roles[]" value="{{ $role->name }}">
+                                        <label for="role-{{ $role->id }}">{{ $role->name }}</label>
                                     </li>
                                 @endforeach
                             </ul>
@@ -55,14 +44,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('isAdmin').addEventListener('change', function() {
-            let isChecked = this.checked;
-            document.getElementById('admin-permissions').style.display = isChecked ? 'block' : 'none';
-            document.getElementById('web-permissions').style.display = isChecked ? 'none' : 'block';
-        });
-    </script>
 @endsection
 
 <style>
@@ -87,12 +68,6 @@
         width: 250px;
 
         margin-left: 20px;
-    }
-
-    .checkboxes {
-        transform: scale(1.3);
-        margin-left: 15px;
-        align-self: center;
     }
 
     .Roles {

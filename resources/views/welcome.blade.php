@@ -25,13 +25,13 @@
         @if (Route::has('login'))
             <nav class="tw-flex tw-items-center tw-justify-end tw-gap-4">
                 @auth
-                    @role('admin')
-                    <h1 class="welcomeText">Welcome {{ $user->name }}</h1>
-                    <a href="{{ route('dashboard') }}"
-                        class="tw-inline-block tw-px-5 tw-py-1.5 tw-border text-[#0099ff] tw-text-sm ">
-                        Dashboard
-                    </a>
-                @endrole
+                  
+                        {{-- <h1 class="welcomeText">Welcome {{ $user->name }}</h1>
+                        <a href="{{ route('dashboard') }}"
+                            class="tw-inline-block tw-px-5 tw-py-1.5 tw-border text-[#0099ff] tw-text-sm ">
+                            Dashboard
+                        </a> --}}
+               
                 <a href="{{ route('getAllTasks') }}"
                     class="tw-inline-block tw-px-5 tw-py-1.5 tw-border text-[#0099ff] tw-rounded-sm tw-text-sm">
                     Tasks

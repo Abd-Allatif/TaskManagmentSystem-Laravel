@@ -11,9 +11,10 @@ use App\Repositories\Admin\UserRepository;
 use App\Repositories\AdminRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TaskRepository;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Repositories\Admin\AdminManagmentRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(AuthenticatedSessionController::class,function($app){
+            return new AuthenticatedSessionController;
+        });
+
         $this->app->bind(TaskRepository::class,function($app){
             return new TaskRepository;
         });
@@ -45,8 +50,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AdminCategoryRepository::class,function($app){
             return new AdminCategoryRepository;
         });
+        
         $this->app->bind(AdminTaskRepository::class,function($app){
             return new AdminTaskRepository;
+        });
+
+        $this->app->bind(AdminManagmentRepository::class,function($app){
+            return new AdminManagmentRepository;
         });
     }
 

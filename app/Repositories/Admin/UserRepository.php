@@ -3,9 +3,12 @@
 namespace App\Repositories\Admin;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+use Spatie\Permission\Models\Role;
+
 //use Your Model
 
 /**
@@ -13,12 +16,35 @@ use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
  */
 class UserRepository
 {
+    public function getAllUsersWithRoles()
+    {
+        $users = User::with(['tasks', 'roles', 'permissions'])->get();
+
+        return $users;
+    }
+
+    public function getUserWithRole($userId)
+    {
+        $user = User::with(['roles', 'permissions'])->find($userId);
+
+        return $user;
+    }
+
+    // Web Guard Roles
+    public function getWebRoles()
+    {
+        $role = Role::where('guard_name','web')->get();
+
+        return $role;
+    }
+
     public function createUser($data)
     {
         DB::transaction(function () use ($data) {
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'email_verified_at' => Carbon::now(),
                 'password' => Hash::make($data['password'])
             ]);
 

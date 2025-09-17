@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminAuth\RegisteredAdminController;
 use App\Http\Controllers\AdminAuth\VerificationController;
 use App\Http\Controllers\Managment\Admin\AdminCategoryController;
 use App\Http\Controllers\Managment\Admin\AdminController;
+use App\Http\Controllers\Managment\Admin\AdminManagmentController;
 use App\Http\Controllers\Managment\Admin\AdminTaskController;
 use App\Http\Controllers\Managment\Admin\RolesController;
 use App\Http\Controllers\Managment\Admin\UserController;
@@ -14,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(["prefix" => 'admin'], function () {
     Route::middleware(['auth:admin', 'verifyEmailAddress'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-        Route::get('/admin-managment-view', [AdminController::class, 'adminManagmentView'])->name('adminManagmentView');
 
         Route::group(['prefix' => 'user'], function () {
             Route::get('/managment', [UserController::class, 'userManagment'])->name('userManagment');
@@ -53,15 +53,27 @@ Route::group(["prefix" => 'admin'], function () {
         });
 
         Route::group(['prefix' => 'tasks'], function () {
-            Route::get('managment', [AdminTaskController::class,'taskPage'])->name('taskManagment');
+            Route::get('managment', [AdminTaskController::class, 'taskPage'])->name('taskManagment');
 
-            Route::get('/create', [AdminTaskController::class,'createTaskPage'])->name('taskCreatePage');
-            Route::post('/create-task', [AdminTaskController::class,'createTask'])->name('createTask');
+            Route::get('/create', [AdminTaskController::class, 'createTaskPage'])->name('taskCreatePage');
+            Route::post('/create-task', [AdminTaskController::class, 'createTask'])->name('createTask');
 
-            Route::get('/edit/{taslId}', [AdminTaskController::class,'editTaskPage'])->name('taskEditPage');
-            Route::put('/edit-task/{taskId}', [AdminTaskController::class,'editTask'])->name('editTaskAdmin');
+            Route::get('/edit/{taslId}', [AdminTaskController::class, 'editTaskPage'])->name('taskEditPage');
+            Route::put('/edit-task/{taskId}', [AdminTaskController::class, 'editTask'])->name('editTaskAdmin');
 
-            Route::delete('/delete-task/{taskId}', [AdminTaskController::class,'deleteTask'])->name('deleteTask');
+            Route::delete('/delete-task/{taskId}', [AdminTaskController::class, 'deleteTask'])->name('deleteTask');
+        });
+
+        Route::group(['prefix' => 'admin-managment'], function () {
+            Route::get('managment', [AdminManagmentController::class, 'adminPage'])->name('adminManagment');
+
+            Route::get('/create', [AdminManagmentController::class, 'createAdminPage'])->name('adminCreatePage');
+            Route::post('/create-admin', [AdminManagmentController::class, 'createAdmin'])->name('createAdmin');
+
+            Route::get('/edit/{adminId}', [AdminManagmentController::class, 'editAdminPage'])->name('adminEditPage');
+            Route::put('/edit-admin/{adminId}', [AdminManagmentController::class, 'editAdmin'])->name('editAdmin');
+
+            Route::delete('/delete-admin/{adminId}', [AdminManagmentController::class, 'deleteAdmin'])->name('deleteAdmin');
         });
     });
 

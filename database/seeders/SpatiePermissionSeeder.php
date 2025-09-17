@@ -19,37 +19,27 @@ class SpatiePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $ItRole = Role::create(['name' => 'It']);
-        $DesignerRole = Role::create(['name' => 'Graphic-Designers']);
-
         $permissions = [
-            'viewTask',
-            'editTask',
-            'deleteTask',
-            'editStatusAfterComplete',
-            'editStatusAfterExpired',
-            'viewCategory',
-            'createCategory',
-            'editCategory',
-            'deleteCategory',
-            'assignToUserTask'
+            'view Task',
+            'Create Task',
+            'Edit Task',
+            'Delete Task',
+            'Edit Status After Complete',
+            'Edit Status After Expired',
+            'View Category',
+            'Create Category',
+            'Edit Category',
+            'Delete Category',
+            'Assign Task To User',
+            'View Admins',
+            'Create Admins',
+            'Edit Admins',
+            'Delete Admins',
+            'View DashBoard',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
-        }
-
-        $ItRole->givePermissionTo(['viewTask','viewCategory']);
-        $DesignerRole->givePermissionTo(['viewTask','viewCategory']);
-
-        $users = User::all();
-
-        foreach ($users as $user) {
-            if (fake()->boolean(50)) {
-                $user->assignRole($ItRole);
-            } else {
-                $user->assignRole($DesignerRole);
-            }
+            Permission::create(['name' => $permission,'guard_name'=>'admin']);
         }
     }
 }

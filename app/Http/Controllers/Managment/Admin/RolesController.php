@@ -28,9 +28,10 @@ class RolesController extends Controller
 
     public function showCreatePage()
     {
-        $permissions = Permission::all();
+        $webPermissions = $this->rolesRepository->getWebPermissions();
+        $adminPermissions = $this->rolesRepository->getAdminPermissions();
 
-        return view('pages.admin.Managment.role-create-page', ['permissions' => $permissions]);
+        return view('pages.admin.Managment.role-create-page', ['webPermissions' => $webPermissions, 'adminPermissions' => $adminPermissions]);
     }
 
     public function createRole(Request $request)
@@ -50,15 +51,16 @@ class RolesController extends Controller
 
     public function showEditPage($roleId)
     {
-        $permissions = Permission::all();
+        $webPermissions = $this->rolesRepository->getWebPermissions();
+        $adminPermissions = $this->rolesRepository->getAdminPermissions();
 
         $role = $this->rolesRepository->getRole($roleId);
 
         // return response()->json($role);
-        return view('pages.admin.Managment.role-edit-page', ['role' => $role,'permissions' => $permissions]);
+        return view('pages.admin.Managment.role-edit-page', ['role' => $role, 'webPermissions' => $webPermissions, 'adminPermissions' => $adminPermissions]);
     }
 
-    public function editRole(Request $request,$roleId)
+    public function editRole(Request $request, $roleId)
     {
         $validated = $request->validate([
             'name' => ['required', 'string'],
@@ -67,15 +69,15 @@ class RolesController extends Controller
             'permissions.*' => ['string', 'nullable']
         ]);
 
-        $this->rolesRepository->editRole($validated,$roleId);
+        $this->rolesRepository->editRole($validated, $roleId);
 
         // return response()->json($validated); 
         return redirect()->route('rolesManagment')->with('status', 'Role Updated Successfully');
     }
 
-    public function deleteRole(Request $request,$roleId)
+    public function deleteRole(Request $request, $roleId)
     {
-        $this->rolesRepository->deleteRole($roleId,$request->guard);
+        $this->rolesRepository->deleteRole($roleId, $request->guard);
         return redirect()->route('rolesManagment')->with('status', 'Role Deleted');
     }
 }

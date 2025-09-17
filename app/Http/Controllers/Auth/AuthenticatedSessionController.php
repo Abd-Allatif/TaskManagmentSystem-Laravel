@@ -28,14 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $user = Auth::user();
-
-        if ($user->hasRole('admin')) {
-            Auth::logout();
-            abort(403, 'Please Use a Valid Email Address to Procceed');
-        } else {
-            return redirect()->intended(route('getAllTasks', absolute: false));
-        }
+        return redirect()->intended(route('getAllTasks', absolute: false));
+        
     }
 
     /**

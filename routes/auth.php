@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest:web')->group(function () {
 
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -31,7 +31,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.resetPass');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:web')->group(function () {
     // Custom Verification Methods
     Route::get('/email/verify', [VerificationController::class, 'noticePageView'])
         ->middleware('auth')

@@ -8,14 +8,14 @@
                     <div class="row">
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Edit Role</h5>
-                          
-                                <h2 class="card-title">Edit {{ $role->name }}</h2>
+
+                            <h2 class="card-title">Edit {{ $role->name }}</h2>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body" id="card-content">
-                    <form action="{{route('editRole',$role->id)}}" method="POST">
+                    <form action="{{ route('editRole', $role->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         @isset($role)
@@ -23,17 +23,29 @@
                             <input type="text" class="EditInput" value="{{ $role->name }}" name="name">
                             <br><br>
                             <label for="name">Is Admin:</label>
-                            <input type="checkbox" class="checkboxes" name="isAdmin" value="1" {{$role->guard_name == 'admin' ? 'checked' : ''}}>
+                            <input type="checkbox" class="checkboxes" name="isAdmin" id="isAdmin" value="1"
+                                {{ $role->guard_name == 'admin' ? 'checked' : '' }}>
                             <br><br>
 
                             <div class="Roles">
                                 <h4>Roles</h4>
-                                <ul>
-                                    @foreach ($permissions as $permission)
+                                <ul id="web-permissions" @if ($role->guard_name == 'admin') style="display: none;" @endif>
+                                    @foreach ($webPermissions as $permission)
                                         <li>
                                             <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
                                                 {{ in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'checked' : '' }}>
                                             <label for="role-{{ $permission->id }}">{{ $permission->name }}</label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <ul id="admin-permissions" @if ($role->guard_name == 'web') style="display: none;" @endif>
+                                    @foreach ($adminPermissions as $permission)
+                                        <li>
+                                            <input class="checkboxes" type="checkbox" name="permissions[]"
+                                                {{ in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'checked' : '' }}
+                                                value="{{ $permission->name }}">
+                                            <label for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -45,6 +57,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('isAdmin').addEventListener('change', function() {
+            let isChecked = this.checked;
+
+            document.querySelectorAll('input[name="permissions[]"]').forEach(checkBox => {
+                checkBox.checked = false;
+            });
+
+            document.getElementById('admin-permissions').style.display = isChecked ? 'block' : 'none';
+            document.getElementById('web-permissions').style.display = isChecked ? 'none' : 'block';
+        });
+    </script>
 @endsection
 
 <style>
