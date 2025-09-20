@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminTaskCreateRequest;
+use App\Http\Requests\Admin\AdminTaskUpdateRequest;
 use App\Models\User;
 use App\Repositories\Admin\AdminTaskRepository;
 use App\Repositories\AdminRepository;
@@ -39,18 +41,9 @@ class AdminTaskController extends Controller
         return view('pages.admin.Managment.task-create-page', ['categories' => $categories, 'users' => $users, 'deadline' => $deadline]);
     }
 
-    public function createTask(Request $request)
+    public function createTask(AdminTaskCreateRequest $request)
     {
-        $validated = $request->validate(
-            [
-                'title' => ['required', 'string'],
-                'description' => ['required', 'string'],
-                'deadline' => ['required', 'date'],
-                'status' => ['required', 'int'],
-                'categories' => ['required', 'array', 'min:1'],
-                'users' => ['required', 'array', 'min:1']
-            ]
-        );
+        $validated = $request->validated();
 
         $this->adminTaskRepository->createTask($validated);
         // return response()->json($validated);
@@ -66,22 +59,9 @@ class AdminTaskController extends Controller
         return view('pages.admin.Managment.task-edit-page', ['task' => $task, 'categories' => $categories, 'users' => $users]);
     }
 
-    public function editTask(Request $request, $taskId)
+    public function editTask(AdminTaskUpdateRequest $request, $taskId)
     {
-        $validated = $request->validate(
-            [
-                'title' => ['required', 'string'],
-                'description' => ['required', 'string', 'max:510'],
-                'deadline' => ['required', 'date'],
-                'status' => ['required', 'int'],
-                'categories' => ['required', 'array', 'min:1'],
-                'users' => ['required', 'array', 'min:1'],
-                'subtasks' => ['nullable', 'array'],
-                'subtasks.*' => ['nullable', 'string', 'max:255'],
-                'new_subtasks' => ['nullable', 'array'],
-                'new_subtasks.*' => ['nullable', 'string', 'max:255']
-            ]
-        );
+        $validated = $request->validated();
 
         $this->adminTaskRepository->updateTask($taskId, $validated);
 

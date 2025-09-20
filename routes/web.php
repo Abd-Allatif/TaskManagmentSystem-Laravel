@@ -25,7 +25,7 @@ Route::middleware(['auth:web', 'verifyEmailAddress'])->group(function () {
 
     Route::get('/tasks/about_task/{taskid}', [TaskController::class, 'showClickedTask'])->name('getClickedTask');
 
-    Route::get('/tasks/createTask', [TaskController::class, 'ShowcreateTask'])->name('createTask');
+    Route::get('/tasks/createTask', [TaskController::class, 'ShowcreateTask'])->name('createTaskUser');
     Route::post('/tasks/create_new_task', [TaskController::class, 'createTask'])->name('createNewTask');
 
     Route::get('/tasks/show_edit_task/{taskId}', [TaskController::class, 'showEditPage'])->name('showEditPage');

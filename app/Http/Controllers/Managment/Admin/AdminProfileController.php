@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminProfileUpdateRequest;
 use App\Repositories\Admin\AdminProfileRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +25,9 @@ class AdminProfileController extends Controller
         return view('pages.admin.Managment.profile', ['admin' => $admin]);
     }
 
-    public function editProfile(Request $request)
+    public function editProfile(AdminProfileUpdateRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'oldPassword' => ['required', 'min:8'],
-            'newPassword' => ['required', 'min:8']
-        ]);
+        $validated = $request->validated();
 
         $admin = Auth::guard('admin')->user();
 

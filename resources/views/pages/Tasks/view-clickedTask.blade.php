@@ -9,7 +9,11 @@
             </div>
 
             <div id="actions">
-                <a id="CreateTask" href="{{ route('showEditPage', [$task->id, $task->title]) }}">Edit Task</a>
+                @can('Edit Task')
+                    @if ($task->created_by != \App\enums\CreatedBy::Admin)
+                        <a id="CreateTask" href="{{ route('showEditPage', [$task->id, $task->title]) }}">Edit Task</a>
+                    @endif
+                @endcan
             </div>
         </div>
 
@@ -61,11 +65,13 @@
             <form action="{{ route('EndTask', $task->id) }}" method="POST">@csrf <input id="endFlag" name="endflag"
                     value="End Task" type="submit"></form>
 
-            <div id="toggleForm" class="showSubtaskForm">
-                <button class="showFormBtn">
-                    Create SubTasks
-                </button>
-            </div>
+            @if ($task->created_by != \App\enums\CreatedBy::Admin)
+                <div id="toggleForm" class="showSubtaskForm">
+                    <button class="showFormBtn">
+                        Create SubTasks
+                    </button>
+                </div>
+            @endif
 
             <!-- Adding a Sub Task Creation to View Clicked Tasks -->
             <div id="createSubTask" class="createSubTask">
@@ -333,9 +339,9 @@
 
         .container {
             /* position: absolute;
-                                                top: 50%;
-                                                left: 50%;
-                                                transform: translate(-50%, -50%); */
+                                                                                top: 50%;
+                                                                                left: 50%;
+                                                                                transform: translate(-50%, -50%); */
 
             align-self: center;
             justify-self: center;

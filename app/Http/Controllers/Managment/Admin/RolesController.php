@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminRoleRequest;
 use App\Repositories\Admin\RolesRepository;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -34,14 +35,9 @@ class RolesController extends Controller
         return view('pages.admin.Managment.role-create-page', ['webPermissions' => $webPermissions, 'adminPermissions' => $adminPermissions]);
     }
 
-    public function createRole(Request $request)
+    public function createRole(AdminRoleRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'isAdmin' => ['nullable', 'boolean'],
-            'permissions' => ['array', 'nullable'],
-            'permissions.*' => ['string', 'nullable']
-        ]);
+        $validated = $request->validated();
 
         $this->rolesRepository->createRole($validated);
 
@@ -60,14 +56,9 @@ class RolesController extends Controller
         return view('pages.admin.Managment.role-edit-page', ['role' => $role, 'webPermissions' => $webPermissions, 'adminPermissions' => $adminPermissions]);
     }
 
-    public function editRole(Request $request, $roleId)
+    public function editRole(AdminRoleRequest $request, $roleId)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'isAdmin' => ['nullable', 'boolean'],
-            'permissions' => ['array', 'nullable'],
-            'permissions.*' => ['string', 'nullable']
-        ]);
+        $validated = $request->validated();
 
         $this->rolesRepository->editRole($validated, $roleId);
 

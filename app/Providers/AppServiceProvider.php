@@ -24,45 +24,45 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AuthenticatedSessionController::class,function($app){
-            return new AuthenticatedSessionController;
-        });
+        // $this->app->bind(AuthenticatedSessionController::class,function($app){
+        //     return new AuthenticatedSessionController;
+        // });
 
-        $this->app->bind(TaskRepository::class,function($app){
-            return new TaskRepository;
-        });
+        // $this->app->bind(TaskRepository::class,function($app){
+        //     return new TaskRepository;
+        // });
 
-        $this->app->bind(CategoryRepository::class,function($app){
-            return new CategoryRepository;
-        });
+        // $this->app->bind(CategoryRepository::class,function($app){
+        //     return new CategoryRepository;
+        // });
 
-        $this->app->bind(AdminRepository::class,function($app){
-            return new AdminRepository;
-        });
+        // $this->app->bind(AdminRepository::class,function($app){
+        //     return new AdminRepository;
+        // });
 
-        $this->app->bind(UserRepository::class,function($app){
-            return new UserRepository;
-        });
+        // $this->app->bind(UserRepository::class,function($app){
+        //     return new UserRepository;
+        // });
 
-        $this->app->bind(RolesRepository::class,function($app){
-            return new RolesRepository;
-        });
+        // $this->app->bind(RolesRepository::class,function($app){
+        //     return new RolesRepository;
+        // });
 
-        $this->app->bind(AdminCategoryRepository::class,function($app){
-            return new AdminCategoryRepository;
-        });
+        // $this->app->bind(AdminCategoryRepository::class,function($app){
+        //     return new AdminCategoryRepository;
+        // });
         
-        $this->app->bind(AdminTaskRepository::class,function($app){
-            return new AdminTaskRepository;
-        });
+        // $this->app->bind(AdminTaskRepository::class,function($app){
+        //     return new AdminTaskRepository;
+        // });
 
-        $this->app->bind(AdminManagmentRepository::class,function($app){
-            return new AdminManagmentRepository;
-        });
+        // $this->app->bind(AdminManagmentRepository::class,function($app){
+        //     return new AdminManagmentRepository;
+        // });
 
-        $this->app->bind(AdminProfileRepository::class,function($app){
-            return new AdminProfileRepository;
-        });
+        // $this->app->bind(AdminProfileRepository::class,function($app){
+        //     return new AdminProfileRepository;
+        // });
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminManagmentRequest;
+use App\Http\Requests\Admin\UpdateAdminManagmentRequest;
 use App\Models\Admin;
 use App\Repositories\Admin\AdminManagmentRepository;
 use Illuminate\Http\Request;
@@ -30,15 +32,9 @@ class AdminManagmentController extends Controller
         return view('pages.admin.Managment.admin-create-page', ['roles' => $roles]);
     }
 
-    public function createAdmin(Request $request)
+    public function createAdmin(AdminManagmentRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:8'],
-            'roles' => ['nullable', 'array'],
-            'roles.*' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         $this->adminManagmentRepository->createAdmin($validated);
 
@@ -53,14 +49,9 @@ class AdminManagmentController extends Controller
         return view('pages.admin.Managment.admin-edit-page', ['admin' => $admin, 'roles' => $roles]);
     }
 
-    public function editAdmin(Request $request, $adminId)
+    public function editAdmin(UpdateAdminManagmentRequest $request, $adminId)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'roles' => ['nullable', 'array'],
-            'roles.*' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         $this->adminManagmentRepository->editAdmin($adminId, $validated);
 

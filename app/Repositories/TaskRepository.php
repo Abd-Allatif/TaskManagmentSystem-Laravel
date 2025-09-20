@@ -83,7 +83,7 @@ class TaskRepository
                 'create_date' => Carbon::now(),
                 'deadline' => $data['deadline'],
                 'status' => $data['status'],
-                'created_by' => CreatedBy::User,
+                'created_by' => 2,
                 'end_flag' => false,
             ]);
 
@@ -105,7 +105,7 @@ class TaskRepository
                         'create_date' => $task->create_date,
                         'deadline' => $task->deadline,
                         'status' => $task->status,
-                        'created_by' => CreatedBy::User,
+                        'created_by' => 2,
                         'end_flag' => $task->end_flag,
                         'parentTask_id' => $taskId
                     ]);

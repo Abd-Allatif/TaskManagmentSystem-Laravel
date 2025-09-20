@@ -5,11 +5,11 @@
     <div id="BackButton">
         <button class="backButton" onclick="window.location.href='{{ route('getAllTasks') }}'">Back</button>
     </div>
-    
+
     <div class="container">
         <x-auth-session-status class="text" :status="session('status')" />
 
-        <form class="form" method="POST" action="{{ route('editTask',$task->id) }}">
+        <form class="form" method="POST" action="{{ route('editTask', $task->id) }}">
             @csrf
             @method('PUT')
 
@@ -29,13 +29,38 @@
                     class="input" required="" />
             </div>
 
-            <div class="checkBox">
-                <input type="radio" name="status" value={{0}} {{ $task->status == \App\enums\Status::Pending ? 'checked' : '' }}>
-                <label for="status">Pending</label>
-                <input id="in_progress" type="radio" name="status" value={{2}}
-                    {{ $task->status == \App\enums\Status::In_Progress ? 'checked' : '' }}>
-                <label for="status">In Progress</label>
-            </div>
+            @if ($task->status == \App\enums\Status::Completed)
+                @can('Edit Status After Complete')
+                    <div class="checkBox">
+                        <input type="radio" name="status" value={{ 0 }}
+                            {{ $task->status == \App\enums\Status::Pending ? 'checked' : '' }}>
+                        <label for="status">Pending</label>
+                        <input id="in_progress" type="radio" name="status" value={{ 2 }}
+                            {{ $task->status == \App\enums\Status::In_Progress ? 'checked' : '' }}>
+                        <label for="status">In Progress</label>
+                    </div>
+                @endcan
+            @elseif($task->status == \App\enums\Status::Expired)
+                @can('Edit Status After Expired')
+                    <div class="checkBox">
+                        <input type="radio" name="status" value={{ 0 }}
+                            {{ $task->status == \App\enums\Status::Pending ? 'checked' : '' }}>
+                        <label for="status">Pending</label>
+                        <input id="in_progress" type="radio" name="status" value={{ 2 }}
+                            {{ $task->status == \App\enums\Status::In_Progress ? 'checked' : '' }}>
+                        <label for="status">In Progress</label>
+                    </div>
+                @endcan
+            @else
+                <div class="checkBox">
+                    <input type="radio" name="status" value={{ 0 }}
+                        {{ $task->status == \App\enums\Status::Pending ? 'checked' : '' }}>
+                    <label for="status">Pending</label>
+                    <input id="in_progress" type="radio" name="status" value={{ 2 }}
+                        {{ $task->status == \App\enums\Status::In_Progress ? 'checked' : '' }}>
+                    <label for="status">In Progress</label>
+                </div>
+            @endif
 
             <div>
                 <div class="dropdown">
@@ -171,9 +196,9 @@
 
         .container {
             /* position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%); */
+                                                    top: 50%;
+                                                    left: 50%;
+                                                    transform: translate(-50%, -50%); */
 
             align-self: center;
             justify-self: center;

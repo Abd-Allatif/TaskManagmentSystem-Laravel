@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Managment\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminCategoryRequest;
 use App\Repositories\Admin\AdminCategoryRepository;
 use App\Repositories\AdminRepository;
 use App\Repositories\CategoryRepository;
@@ -31,12 +32,9 @@ class AdminCategoryController extends Controller
         return view('pages.admin.Managment.category-create-page');
     }
 
-    public function createCategory(Request $request)
+    public function createCategory(AdminCategoryRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['string', 'required'],
-            'color' => ['string', 'required']
-        ]);
+        $validated = $request->validated();
 
         $this->adminCategoryRepository->createCategory($validated);
 
@@ -51,12 +49,9 @@ class AdminCategoryController extends Controller
         return view('pages.admin.Managment.category-edit-page',['category' => $category]);
     }
 
-    public function editCategory(Request $request,$categoryId)
+    public function editCategory(AdminCategoryRequest $request,$categoryId)
     {
-        $validated = $request->validate([
-            'name' => ['string', 'required'],
-            'color' => ['string', 'required']
-        ]);
+        $validated = $request->validated();
 
         $this->adminCategoryRepository->editCategory($validated,$categoryId);
 

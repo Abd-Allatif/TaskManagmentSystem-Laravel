@@ -4,29 +4,38 @@
 
     <head>
         <div class="AppBar">
+            <div class="logout">
+                <form action="{{ route('logout') }}" method="POST">@csrf <input class="logoutBtn" type="submit" value="Logout">
+                </form>
+            </div>
+
             <div class="barTitleContainer">
                 <h1 id="bartitle">{{ $userName }}s Tasks</h1>
             </div>
 
             <div id="actions">
-                <a id="CreateTask" href="{{ route('createTask') }}">Create Task</a>
+                @can('Create Task')
+                    <a id="CreateTask" href="{{ route('createTaskUser') }}">Create Task</a>
+                @endcan
             </div>
         </div>
 
-        <div class="Categories">
-            <ul class="categoryList">
-                <div>
-                    <h3 id="CategoryH4">Categories</h3>
-                    <div class="categoriesList">
-                        @foreach ($categories as $category)
-                            <button class="categoryBtn" style="color: {{ $category->color }}"
-                                onClick="window.location.href='{{ route('getClickedCategory', [$category->id, $category->name]) }}'">
-                                {{ $category->name }}</button>
-                        @endforeach
+        @can('View Category')
+            <div class="Categories">
+                <ul class="categoryList">
+                    <div>
+                        <h3 id="CategoryH4">Categories</h3>
+                        <div class="categoriesList">
+                            @foreach ($categories as $category)
+                                <button class="categoryBtn" style="color: {{ $category->color }}"
+                                    onClick="window.location.href='{{ route('getClickedCategory', [$category->id, $category->name]) }}'">
+                                    {{ $category->name }}</button>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            </ul>
-        </div>
+                </ul>
+            </div>
+        @endcan
 
         <form class="form" method="POST" action="{{ route('searchTask') }}">
             @csrf
@@ -56,61 +65,63 @@
         <x-auth-session-status class="text" :status="session('status')" />
 
         <div class="container">
-            <ul class="taskList">
-                @foreach ($tasks as $task)
-                    <li class="tasks">
-                        <h3 id="task_title">{{ $task->title }}</h3>
+            @can('view Task')
+                <ul class="taskList">
+                    @foreach ($tasks as $task)
+                        <li class="tasks">
+                            <h3 id="task_title">{{ $task->title }}</h3>
 
-                        <div class="categories">
-                            <div style="display:flex;flex-direction:row;">
+                            <div class="categories">
                                 <div style="display:flex;flex-direction:row;">
-                                    @foreach ($task->categories as $categories)
-                                        <div class="categories"
-                                            style="color:{{ $categories->color }};padding-left:10px;;padding-top:10px;display:flex;flex-direction:row;">
-                                            {{ $categories->name }}
-                                        </div>
-                                    @endforeach
+                                    <div style="display:flex;flex-direction:row;">
+                                        @foreach ($task->categories as $categories)
+                                            <div class="categories"
+                                                style="color:{{ $categories->color }};padding-left:10px;;padding-top:10px;display:flex;flex-direction:row;">
+                                                {{ $categories->name }}
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="status">
-                                @if ($task->status == \App\enums\Status::Pending)
-                                    <div class="statusContainer">
-                                        <h4 id="task_status">Pending</h4>
-                                        <div class="orange_dot"></div>
-                                    </div>
-                                @elseif ($task->status == \App\enums\Status::In_Progress)
-                                    <div class="statusContainer">
-                                        <h4 id="task_status">In Progress</h4>
-                                        <div class="green_dot"></div>
-                                    </div>
-                                @elseif ($task->status == \App\enums\Status::Completed)
-                                    <div class="statusContainer">
-                                        <h4 id="task_status">Completed</h4>
-                                        <div class="red_dot"></div>
-                                    </div>
-                                @else
-                                    <div class="statusContainer">
-                                        <h4 id="task_status">Expired</h4>
-                                        <div class="red_dot"></div>
-                                    </div>
-                                @endif
-                            </div>
+                                <div class="status">
+                                    @if ($task->status == \App\enums\Status::Pending)
+                                        <div class="statusContainer">
+                                            <h4 id="task_status">Pending</h4>
+                                            <div class="orange_dot"></div>
+                                        </div>
+                                    @elseif ($task->status == \App\enums\Status::In_Progress)
+                                        <div class="statusContainer">
+                                            <h4 id="task_status">In Progress</h4>
+                                            <div class="green_dot"></div>
+                                        </div>
+                                    @elseif ($task->status == \App\enums\Status::Completed)
+                                        <div class="statusContainer">
+                                            <h4 id="task_status">Completed</h4>
+                                            <div class="red_dot"></div>
+                                        </div>
+                                    @else
+                                        <div class="statusContainer">
+                                            <h4 id="task_status">Expired</h4>
+                                            <div class="red_dot"></div>
+                                        </div>
+                                    @endif
+                                </div>
 
-                            <div class="dates">
-                                <h4 id="task_Created_date">Created: {{ $task->create_date }}</h4>
-                                <h4 id="task_End_date">Dead Line: {{ $task->deadline }}</h4>
-                            </div>
+                                <div class="dates">
+                                    <h4 id="task_Created_date">Created: {{ $task->create_date }}</h4>
+                                    <h4 id="task_End_date">Dead Line: {{ $task->deadline }}</h4>
+                                </div>
 
-                            <div id="aboutTask">
-                                <button class="button"
-                                    onclick="window.location.href='{{ route('getClickedTask', [$task->id, $task->title]) }}'">View
-                                    Details</button>
-                            </div>
-                    </li>
-                @endforeach
-                {{ $tasks->links('pagination::default') }}
-            </ul>
+                                <div id="aboutTask">
+                                    <button class="button"
+                                        onclick="window.location.href='{{ route('getClickedTask', [$task->id, $task->title]) }}'">View
+                                        Details</button>
+                                </div>
+                        </li>
+                    @endforeach
+                    {{ $tasks->links('pagination::default') }}
+                </ul>
+            @endcan
         </div>
     </head>
 
@@ -162,6 +173,22 @@
                     text-decoration: none;
                     color: #0099ff;
                     font-weight: bold;
+                }
+            }
+
+            .logout {
+                position: absolute;
+                right: 89%;
+                align-self: center;
+
+                .logoutBtn {
+                    border: none;
+                    background: none;
+                    text-decoration: none;
+                    color: #0099ff;
+                    font-weight: bold;
+
+                    cursor: pointer;
                 }
             }
         }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('create_date')->default(Carbon::now()->toDateTimeString());
             $table->date('deadline')->default(Carbon::now()->addDays(7)->toDateString());
             $table->unsignedTinyInteger('status')->default(0);
-            $table->unsignedTinyInteger('created_by')->nullable();
+            $table->unsignedTinyInteger('created_by')->default(2);
             $table->boolean('end_flag')->default(false);
             $table->foreignId('parentTask_id')->nullable()->constrained('tasks','id')->onDelete('cascade');
             $table->timestamps();
